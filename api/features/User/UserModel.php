@@ -1,0 +1,35 @@
+<?php
+
+class UserModel {
+    private $db;
+
+     function __construct($db) {
+        $this->db = $db;
+    }
+
+    public function getAll() {
+        return $this->db->query("SELECT idUser,username,email FROM user")->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findById($id) {
+     $stmt = $this->db->prepare("SELECT IdUser,username,email FROM user WHERE idUser=?");
+     $stmt->execute([$id]);
+     return $stmt->fetch(PDO::FETCH_ASSOC); 
+    } 
+
+    public function findByEmail($email) {
+     $stmt = $this->db->prepare("SELECT * FROM user WHERE email=?");
+     $stmt->execute([$email]);
+     return $stmt->fetch(PDO::FETCH_ASSOC); 
+    } 
+
+    public function create($username, $email, $password) {
+        $stmt = $this->db->prepare("INSERT INTO user (username, email,password) VALUES (?, ?, ?)");
+        return $stmt->execute([$username, $email,$password]);
+    }
+
+    public function delete($id) {
+        $stmt = $this->db->prepare("DELETE FROM user WHERE idUser = ?");
+        return $stmt->execute([$id]);
+    }
+}
