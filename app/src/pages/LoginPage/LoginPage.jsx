@@ -35,23 +35,28 @@ export const LoginPage = () => {
 
   return (
     <section>
-      <form onSubmit={handleSubmit}>
-        <input
-          id="email"
-          onChange={handleChange}
-          className="border-1 text-black"
-          type="email"
-          name=""
-        />
-        <input
-          id="password"
-          onChange={handleChange}
-          className="border-1"
-          type="text"
-          name=""
-        />
-        <button>Iniciar sesion</button>
-      </form>
+      <form className="flex flex-col  px-180 py-60" onSubmit={handleSubmit}>
+          <h2 className="text-5xl text-center font-bold text-blue-800 font-[Open_Sans]">Iniciar sesion</h2>
+          <label htmlFor="email" className="py-2 px-1 mt-20 font-bold font-[Open_Sans] text-xl text-[#6394BF]">Correo:</label>
+          <input
+            id="email"
+            onChange={handleChange}
+            className="border-1 text-blue-800 font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-[#FFA877]"
+            type="email"
+            name=""
+            placeholder="juanlopez@gmail.com"
+          />
+          <label htmlFor="password" className="mt-10 font-bold font-[Open_Sans] text-xl text-[#6394BF]">Contraseña:</label>
+          <input
+            id="password"
+            onChange={handleChange}
+            className="border-1 text-blue-800 font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-[#FFA877]"
+            type="password"
+            name=""
+            placeholder="*****"
+          />
+          <button className="bg-[#021F59] font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-[#D95448]">Iniciar sesion</button>
+        </form>
     </section>
   );
 };
