@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Folder } from "./components/Folder";
 
 export const HomePage = () => {
   const [folders, setFolders] = useState([]);
@@ -18,7 +19,9 @@ export const HomePage = () => {
         body: JSON.stringify({ ...nameFolder, idUser: userData.idUser }),
       });
       fetchFolders();
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchFolders = async () => {
@@ -52,7 +55,7 @@ export const HomePage = () => {
       const resp = await fetch(`http://localhost:8080/folder/${idFolder}`, {
         method: "DELETE",
       });
-
+      console.log(resp);
       setFolders(folders.filter((f) => f.idFolder !== idFolder));
     } catch (err) {
       console.error("Error al eliminar:", err);
@@ -64,11 +67,6 @@ export const HomePage = () => {
     localStorage.removeItem("userData");
     navigate("/", { replace: true });
   };
-
-  const enterInPage = (id) => {
-    navigate(`/folder/${id}`, { replace: true });
-  };
-
   const handleChange = (e) => {
     setNameFolder({ ...nameFolder, [e.target.id]: e.target.value });
   };
@@ -93,20 +91,18 @@ export const HomePage = () => {
       {folders.length === 0 ? (
         <p>No tienes carpetas creadas aún o están cargando...</p>
       ) : (
-        <ul>
-          {folders.map((f, index) => (
-            <>
-              <li
-                onClick={() => enterInPage(f.idFolder)}
-                idFolder={f.idFolder}
-                key={f.id || index}
-              >
-                {f.idFolder}-<span>{f.title} </span>
-              </li>
-              <button onClick={() => handleDeleteFolder(f.idFolder)}>
+        <ul className="flex">
+          {folders.map((folder, index) => (
+            <div className="flex-col">
+              <Folder
+                key={index}
+                name={folder.title}
+                idFolder={folder.idFolder}
+              />
+              <button onClick={() => handleDeleteFolder(folder.idFolder)}>
                 Eliminar
               </button>
-            </>
+            </div>
           ))}
         </ul>
       )}
