@@ -117,24 +117,24 @@ export const HomePage = () => {
       </div>
       <button
         onClick={handleCloseSession}
-        className="mb-4 bg-gray-200 px-3 py-1 rounded"
+        className="bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2 text-white mb-3 cursor-pointer hover:bg-cafec"
       >
         Cerrar Sesión
       </button>
 
-      <div className="border p-4 rounded mb-4">
+      <div className="flex justify-center gap-3">
         <input
           id="title"
           onChange={handleChange}
           value={nameFolder.title}
           type="text"
           placeholder="agrega un nombre"
-          className="border p-1 mr-2"
+          className="border-1 text-azulf font-bold font-[Open_Sans] text-xl px-2 py-2 mt-3 mb-10 rounded focus:outline-hidden focus:border-cafec"
         />
 
         <button
           onClick={handleCreateFolder}
-          className="bg-blue-500 text-white px-3 py-1 rounded"
+          className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2  mb-10 text-white mt-3 cursor-pointer hover:bg-cafec"
         >
           Crear
         </button>

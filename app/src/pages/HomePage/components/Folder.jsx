@@ -16,13 +16,13 @@ export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
       </div>
       <div className="flex justify-center gap-2 p-2">
         <button
-          className="bg-red-600 text-white text-sm font-bold px-4 py-2 w-full rounded"
+          className="bg-cafef text-white text-sm font-bold px-4 py-2 w-full rounded cursor-pointer hover:bg-cafec"
           onClick={() => handleDeleteFolder(idFolder)}
         >
           Eliminar
         </button>
         <button
-          className="bg-blue-400 text-white text-sm font-bold px-4 py-2 w-full rounded"
+          className="bg-azulf text-white text-sm font-bold px-4 py-2 w-full rounded cursor-pointer hover:bg-azulc"
           onClick={() => handleDeleteFolder(idFolder)}
         >
           Editar
