@@ -9,24 +9,18 @@ class FolderModel
     $this->db = $db;
   }
 
-  public function getAll()
+  public function findAll()
   {
     return $this->db->query("SELECT * FROM folder")->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function getByIdUser($idUser)
+  public function findByIdUser($idUser)
   {
     $stmt = $this->db->prepare("SELECT * FROM folder WHERE idUser=?");
     $stmt->execute([$idUser]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function getNotesByFolderId($idFolder)
-  {
-    $stmt = $this->db->prepare("SELECT * FROM folder WHERE idUser=?");
-    $stmt->execute([$idFolder]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-  }
   public function findById($id)
   {
     $stmt = $this->db->prepare("SELECT * FROM folder WHERE idFolder=?");
@@ -38,6 +32,12 @@ class FolderModel
   {
     $stmt = $this->db->prepare("INSERT INTO folder (title,idUser) VALUES (?, ?)");
     return $stmt->execute([$title, $idUser]);
+  }
+
+  public function updateTitle($title, $idFolder)
+  {
+    $stmt = $this->db->prepare("UPDATE folder SET title=? WHERE idFolder=?");
+    return $stmt->execute([$title, $idFolder]);
   }
 
   public function delete($id)

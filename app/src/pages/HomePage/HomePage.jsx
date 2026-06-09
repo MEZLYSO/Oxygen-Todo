@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Folder } from "./components/Folder";
+import toast from "react-hot-toast";
+import { Header } from "../../components/Header";
 
 export const HomePage = () => {
   const [folders, setFolders] = useState([]);
-  const [nameFolder, setNameFolder] = useState({ title: "" }); // 1. Inicializado con el campo esperado
+  const [nameFolder, setNameFolder] = useState({ title: "" });
   const [foldersFilter, setFoldersFilter] = useState([]);
 
   const handleCreateFolder = async () => {
-    if (!nameFolder.title || nameFolder.title.trim() === "") return; // Validación básica
-
+    if (!nameFolder.title || nameFolder.title.trim() === "") return;
     try {
       const storedUser = localStorage.getItem("userData");
       const userData = JSON.parse(storedUser);
@@ -22,8 +23,11 @@ export const HomePage = () => {
         body: JSON.stringify({ ...nameFolder, idUser: userData.idUser }),
       });
 
+      const data = await resp.json();
+
       if (resp.ok) {
-        setNameFolder({ title: "" }); // 4. Limpia el formulario/estado al crear
+        toast.success(data.message);
+        setNameFolder({ title: "" });
         fetchFolders();
       }
     } catch (error) {
@@ -52,7 +56,7 @@ export const HomePage = () => {
 
       const data = await resp.json();
       setFolders(data);
-      setFoldersFilter(data); // 2. CORRECCIÓN: Llenamos también el filtro al cargar por primera vez
+      setFoldersFilter(data);
     } catch (err) {
       console.error(err);
     }
@@ -64,7 +68,6 @@ export const HomePage = () => {
         method: "DELETE",
       });
       if (resp.ok) {
-        // Actualizamos ambas listas para mantener sincronizado el buscador si está activo
         const updatedList = folders.filter((f) => f.idFolder !== idFolder);
         setFolders(updatedList);
         setFoldersFilter(updatedList);
@@ -102,9 +105,9 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Mis Carpetas</h2>
-      <div>
+    <>
+      <Header title={"Menu principal"} />
+      <div className="pt-10">
         <input
           onChange={handleSearch}
           className="border border-gray-300 rounded p-1 mb-4"
@@ -123,7 +126,7 @@ export const HomePage = () => {
         <input
           id="title"
           onChange={handleChange}
-          value={nameFolder.title} // 4. Vinculado al estado para poder limpiarse
+          value={nameFolder.title}
           type="text"
           placeholder="agrega un nombre"
           className="border p-1 mr-2"
@@ -139,8 +142,7 @@ export const HomePage = () => {
       {foldersFilter.length === 0 ? (
         <p>No se encontraron carpetas...</p>
       ) : (
-        <ul className="flex flex-wrap gap-3">
-          {/* 3. CORRECCIÓN: Mapeamos 'foldersFilter', no 'folders' */}
+        <ul className="flex flex-wrap justify-none gap-3">
           {foldersFilter.map((folder) => (
             <li key={folder.idFolder} className="list-none">
               <Folder
@@ -152,6 +154,6 @@ export const HomePage = () => {
           ))}
         </ul>
       )}
-    </div>
+    </>
   );
 };

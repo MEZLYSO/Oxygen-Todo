@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { NoteCard } from "./components/NoteCard";
 
 export const FolderPage = () => {
   const { idFolder } = useParams();
@@ -56,22 +57,16 @@ export const FolderPage = () => {
       {notes.length === 0 ? (
         <p>No hay notas en esta carpeta o están cargando...</p>
       ) : (
-        <div style={{ display: "grid", gap: "15px", marginTop: "20px" }}>
+        <div className="flex">
           {notes.map((note) => (
-            <div
+            <NoteCard
               key={note.idNote}
-              style={{
-                border: "1px solid #ddd",
-                padding: "15px",
-                borderRadius: "6px",
-                backgroundColor: "#fff",
-              }}
-            >
-              <h3 style={{ margin: "0 0 10px 0" }}>{note.title}</h3>
-              <p>{note.content}</p>
-              <small style={{ color: "gray" }}>Creado: {note.createdAt}</small>
-              <button onClick={() => deleteNote(note.idNote)}>Eliminar</button>
-            </div>
+              idNote={note.idNote}
+              title={note.title}
+              content={note.content}
+              createdAt={note.createdAt}
+              deleteNote={deleteNote()}
+            />
           ))}
         </div>
       )}
