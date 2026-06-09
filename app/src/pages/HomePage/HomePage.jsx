@@ -131,6 +131,7 @@ export const HomePage = () => {
           placeholder="agrega un nombre"
           className="border p-1 mr-2"
         />
+
         <button
           onClick={handleCreateFolder}
           className="bg-blue-500 text-white px-3 py-1 rounded"

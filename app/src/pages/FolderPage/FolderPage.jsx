@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NoteCard } from "./components/NoteCard";
+import { Header } from "../../components/Header";
 
 export const FolderPage = () => {
   const { idFolder } = useParams();
@@ -47,29 +48,29 @@ export const FolderPage = () => {
   }, [idFolder]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Carpeta ID: {idFolder}</h2>
-
-      <hr />
-      <button onClick={() => navigate("/home", { replace: true })}>
-        Regresar
-      </button>
-      {notes.length === 0 ? (
-        <p>No hay notas en esta carpeta o están cargando...</p>
-      ) : (
-        <div className="flex">
-          {notes.map((note) => (
-            <NoteCard
-              key={note.idNote}
-              idNote={note.idNote}
-              title={note.title}
-              content={note.content}
-              createdAt={note.createdAt}
-              deleteNote={deleteNote()}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    <>
+      <Header title={"Notas"} />
+      <div className="pt-20">
+        <button onClick={() => navigate("/home", { replace: true })}>
+          Regresar
+        </button>
+        {notes.length === 0 ? (
+          <p>No hay notas en esta carpeta o están cargando...</p>
+        ) : (
+          <div className="flex p-5">
+            {notes.map((note) => (
+              <NoteCard
+                key={note.idNote}
+                idNote={note.idNote}
+                title={note.title}
+                content={note.content}
+                createdAt={note.createdAt}
+                deleteNote={deleteNote()}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };

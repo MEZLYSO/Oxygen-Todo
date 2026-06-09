@@ -9,12 +9,25 @@ export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
   };
 
   return (
-    <>
+    <div className="hover:bg-blue-100 rounded-xl duration-300">
       <div className="cursor-pointer" onClick={() => enterInPage(idFolder)}>
         <img src={folder} />
-        <h1 className="font-bold text-center">{name}</h1>
+        <h1 className="text-center -mt-5">{name}</h1>
       </div>
-      <button onClick={() => handleDeleteFolder(idFolder)}>Eliminar</button>
-    </>
+      <div className="flex justify-center gap-2 p-2">
+        <button
+          className="bg-red-600 text-white text-sm font-bold px-4 py-2 w-full rounded"
+          onClick={() => handleDeleteFolder(idFolder)}
+        >
+          Eliminar
+        </button>
+        <button
+          className="bg-blue-400 text-white text-sm font-bold px-4 py-2 w-full rounded"
+          onClick={() => handleDeleteFolder(idFolder)}
+        >
+          Editar
+        </button>
+      </div>
+    </div>
   );
 };
