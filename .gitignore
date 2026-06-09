@@ -1,4 +1,4 @@
 data
-# database.db
+database.db
 .fresh
 node_modules

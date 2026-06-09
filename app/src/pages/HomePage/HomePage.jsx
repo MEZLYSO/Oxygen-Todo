@@ -4,6 +4,7 @@ import { Folder } from "./components/Folder";
 import toast from "react-hot-toast";
 import { Header } from "../../components/Header";
 import { LogOut } from "lucide-react";
+import { Modal } from "../../components/Modal";
 
 export const HomePage = () => {
   const [folders, setFolders] = useState([]);
@@ -116,11 +117,12 @@ export const HomePage = () => {
           placeholder="Buscar carpeta..."
         />
       </div>
+      <Modal />
       <button
         onClick={handleCloseSession}
         className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2 text-white mb-3 cursor-pointer hover:bg-cafec"
       >
-        <LogOut /> 
+        <LogOut />
         Cerrar Sesión
       </button>
 
