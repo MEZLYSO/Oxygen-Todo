@@ -34,8 +34,8 @@ export const LoginPage = () => {
   };
 
   return (
-    <section>
-      <form className="flex flex-col  px-180 py-60 bg-fondo" onSubmit={handleSubmit}>
+    <section className="h-screen bg-fondo flex justify-center items-center">
+      <form onSubmit={handleSubmit}>
           <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans]">Iniciar sesion</h2>
           <label htmlFor="email" className="py-2 px-1 mt-20 font-bold font-[Open_Sans] text-xl text-cafef">Correo:</label>
           <input

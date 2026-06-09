@@ -9,7 +9,7 @@ export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
   };
 
   return (
-    <div className="hover:bg-blue-100 rounded-xl duration-300">
+    <div className="hover:bg-fondo rounded-xl duration-300">
       <div className="cursor-pointer" onClick={() => enterInPage(idFolder)}>
         <img src={folder} />
         <h1 className="text-center -mt-5">{name}</h1>

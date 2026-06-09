@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Folder } from "./components/Folder";
 import toast from "react-hot-toast";
 import { Header } from "../../components/Header";
+import { LogOut } from "lucide-react";
 
 export const HomePage = () => {
   const [folders, setFolders] = useState([]);
@@ -107,18 +108,19 @@ export const HomePage = () => {
   return (
     <>
       <Header title={"Menu principal"} />
-      <div className="pt-10">
+      <div className="flex bg-fondo pt-10">
         <input
           onChange={handleSearch}
-          className="border border-gray-300 rounded p-1 mb-4"
+          className="border border-gray-600 rounded p-1 mb-4"
           type="text"
           placeholder="Buscar carpeta..."
         />
       </div>
       <button
         onClick={handleCloseSession}
-        className="bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2 text-white mb-3 cursor-pointer hover:bg-cafec"
+        className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2 text-white mb-3 cursor-pointer hover:bg-cafec"
       >
+        <LogOut /> 
         Cerrar Sesión
       </button>
 

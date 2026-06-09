@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NoteCard } from "./components/NoteCard";
 import { Header } from "../../components/Header";
+import { ChevronsLeft } from "lucide-react";
 
 export const FolderPage = () => {
   const { idFolder } = useParams();
@@ -50,12 +51,14 @@ export const FolderPage = () => {
   return (
     <>
       <Header title={"Notas"} />
-      <div className="pt-20">
-        <button onClick={() => navigate("/home", { replace: true })}>
-          Regresar
+      <div className="pt-20 pl-5 bg-fondo">
+        <button onClick={() => navigate("/home", { replace: true })} 
+          className="flex gap-2 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-5 py-2 text-white mb-3 mt-3  cursor-pointer hover:bg-cafec"
+          > <ChevronsLeft /> Regresar
         </button>
         {notes.length === 0 ? (
-          <p>No hay notas en esta carpeta o están cargando...</p>
+          <p className="text-center text-azulf text-2xl font-bold font-[Open_Sans]"
+          > No hay notas en esta carpeta o están cargando...</p>
         ) : (
           <div className="flex p-5">
             {notes.map((note) => (
