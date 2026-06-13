@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Trash2, Pencil } from "lucide-react";
 import folder from "../../../assets/folder.png";
 
 export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
@@ -9,24 +10,32 @@ export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
   };
 
   return (
-    <div className="hover:bg-fondo rounded-xl duration-300">
-      <div className="cursor-pointer" onClick={() => enterInPage(idFolder)}>
-        <img src={folder} />
-        <h1 className="text-center -mt-5">{name}</h1>
+    <div className="relative hover:bg-fondo rounded-xl duration-300 group">
+      <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <button
+          className="bg-cafef text-white p-1.5 rounded cursor-pointer hover:bg-cafec"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteFolder(idFolder);
+          }}
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
+        <button
+          className="bg-azulf text-white p-1.5 rounded cursor-pointer hover:bg-azulc"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <Pencil className="w-4 h-4" />
+        </button>
       </div>
-      <div className="flex justify-center gap-2 p-2">
-        <button
-          className="bg-cafef text-white text-sm font-bold px-4 py-2 w-full rounded cursor-pointer hover:bg-cafec"
-          onClick={() => handleDeleteFolder(idFolder)}
-        >
-          Eliminar
-        </button>
-        <button
-          className="bg-azulf text-white text-sm font-bold px-4 py-2 w-full rounded cursor-pointer hover:bg-azulc"
-          onClick={() => handleDeleteFolder(idFolder)}
-        >
-          Editar
-        </button>
+      <div
+        className="cursor-pointer pt-6"
+        onClick={() => enterInPage(idFolder)}
+      >
+        <img src={folder} />
+        <h1 className="text-center ">{name}</h1>
       </div>
     </div>
   );

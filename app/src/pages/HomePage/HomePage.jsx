@@ -4,12 +4,14 @@ import { Folder } from "./components/Folder";
 import toast from "react-hot-toast";
 import { Header } from "../../components/Header";
 import { LogOut } from "lucide-react";
-import { Modal } from "../../components/Modal";
+import { Modal } from "./components/Modal";
+import { ButtonFloat } from "../../components/ButtonFloat";
 
 export const HomePage = () => {
   const [folders, setFolders] = useState([]);
   const [nameFolder, setNameFolder] = useState({ title: "" });
   const [foldersFilter, setFoldersFilter] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const handleCreateFolder = async () => {
     if (!nameFolder.title || nameFolder.title.trim() === "") return;
@@ -30,6 +32,7 @@ export const HomePage = () => {
       if (resp.ok) {
         toast.success(data.message);
         setNameFolder({ title: "" });
+        setShowModal(false);
         fetchFolders();
       }
     } catch (error) {
@@ -108,7 +111,18 @@ export const HomePage = () => {
 
   return (
     <>
-      <Header title={"Menu principal"} />
+      <Header
+        title={"Menu principal"}
+        right={
+          <button
+            onClick={handleCloseSession}
+            className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2 text-white cursor-pointer hover:bg-cafec"
+          >
+            <LogOut />
+            Cerrar Sesión
+          </button>
+        }
+      />
       <div className="flex bg-fondo pt-10">
         <input
           onChange={handleSearch}
@@ -117,37 +131,25 @@ export const HomePage = () => {
           placeholder="Buscar carpeta..."
         />
       </div>
-      <Modal />
-      <button
-        onClick={handleCloseSession}
-        className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2 text-white mb-3 cursor-pointer hover:bg-cafec"
-      >
-        <LogOut />
-        Cerrar Sesión
-      </button>
-
+      <Modal
+        visible={showModal}
+        onClose={() => setShowModal(false)}
+        handleChange={handleChange}
+        nameFolder={nameFolder}
+        handleCreateFolder={handleCreateFolder}
+      />
       <div className="flex justify-center gap-3">
         <input
-          id="title"
-          onChange={handleChange}
-          value={nameFolder.title}
+          onChange={handleSearch}
+          className="border border-gray-600 rounded p-1 mb-4"
           type="text"
-          placeholder="agrega un nombre"
-          className="border-1 text-azulf font-bold font-[Open_Sans] text-xl px-2 py-2 mt-3 mb-10 rounded focus:outline-hidden focus:border-cafec"
+          placeholder="Buscar carpeta..."
         />
-
-        <button
-          onClick={handleCreateFolder}
-          className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-2  mb-10 text-white mt-3 cursor-pointer hover:bg-cafec"
-        >
-          Crear
-        </button>
       </div>
-
       {foldersFilter.length === 0 ? (
         <p>No se encontraron carpetas...</p>
       ) : (
-        <ul className="flex flex-wrap justify-none gap-3">
+        <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-8 p-5">
           {foldersFilter.map((folder) => (
             <li key={folder.idFolder} className="list-none">
               <Folder
@@ -159,6 +161,7 @@ export const HomePage = () => {
           ))}
         </ul>
       )}
+      <ButtonFloat handleClick={() => setShowModal(true)} />
     </>
   );
 };
