@@ -1,118 +1,38 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Folder } from "./components/Folder";
-import toast from "react-hot-toast";
 import { Header } from "../../components/Header";
 import { LogOut } from "lucide-react";
 import { Modal } from "./components/Modal";
 import { ButtonFloat } from "../../components/ButtonFloat";
+import { useHomePage } from "./hooks/useHomePage";
 
 export const HomePage = () => {
-  const [folders, setFolders] = useState([]);
-  const [nameFolder, setNameFolder] = useState({ title: "" });
-  const [foldersFilter, setFoldersFilter] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleCreateFolder = async () => {
-    if (!nameFolder.title || nameFolder.title.trim() === "") return;
-    try {
-      const storedUser = localStorage.getItem("userData");
-      const userData = JSON.parse(storedUser);
-
-      const resp = await fetch("http://localhost:8080/folder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...nameFolder, idUser: userData.idUser }),
-      });
-
-      const data = await resp.json();
-
-      if (resp.ok) {
-        toast.success(data.message);
-        setNameFolder({ title: "" });
-        setShowModal(false);
-        fetchFolders();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchFolders = async () => {
-    try {
-      const storedUser = localStorage.getItem("userData");
-      const userData = JSON.parse(storedUser);
-
-      const resp = await fetch(
-        `http://localhost:8080/folder/${userData.idUser}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-
-      if (!resp.ok) {
-        throw new Error("Error en la respuesta del servidor");
-      }
-
-      const data = await resp.json();
-      setFolders(data);
-      setFoldersFilter(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleDeleteFolder = async (idFolder) => {
-    try {
-      const resp = await fetch(`http://localhost:8080/folder/${idFolder}`, {
-        method: "DELETE",
-      });
-      if (resp.ok) {
-        const updatedList = folders.filter((f) => f.idFolder !== idFolder);
-        setFolders(updatedList);
-        setFoldersFilter(updatedList);
-      }
-    } catch (err) {
-      console.error("Error al eliminar:", err);
-    }
-  };
-
   const navigate = useNavigate();
+  const {
+    foldersFilter,
+    nameFolder,
+    showModal,
+    setShowModal,
+    handleCreateFolder,
+    handleDeleteFolder,
+    handleChange,
+    handleSearch,
+  } = useHomePage();
+
+  const userData = JSON.parse(localStorage.getItem("userData") || "{}");
   const handleCloseSession = () => {
     localStorage.removeItem("userData");
     navigate("/", { replace: true });
   };
 
-  const handleChange = (e) => {
-    setNameFolder({ ...nameFolder, [e.target.id]: e.target.value });
-  };
-
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase().trim();
-
-    if (term === "") {
-      setFoldersFilter(folders);
-      return;
-    }
-    const listFilter = folders.filter((folder) =>
-      folder.title.toLowerCase().includes(term),
-    );
-    setFoldersFilter(listFilter);
-  };
-
-  useEffect(() => {
-    fetchFolders();
-  }, []);
-
   return (
     <>
       <Header
-        title={"Menu principal"}
+        left={
+          <span className="text-white text-xl font-bold font-[Open_Sans] text-lg">
+            Bienvenida {userData.username}
+          </span>
+        }
         right={
           <button
             onClick={handleCloseSession}
@@ -123,14 +43,6 @@ export const HomePage = () => {
           </button>
         }
       />
-      <div className="flex bg-fondo pt-10">
-        <input
-          onChange={handleSearch}
-          className="border border-gray-600 rounded p-1 mb-4"
-          type="text"
-          placeholder="Buscar carpeta..."
-        />
-      </div>
       <Modal
         visible={showModal}
         onClose={() => setShowModal(false)}
@@ -141,21 +53,21 @@ export const HomePage = () => {
       <div className="flex justify-center gap-3">
         <input
           onChange={handleSearch}
-          className="border border-gray-600 rounded p-1 mb-4"
+          className="border border-gray-600 rounded p-1 my-2"
           type="text"
           placeholder="Buscar carpeta..."
         />
       </div>
       {foldersFilter.length === 0 ? (
-        <p>No se encontraron carpetas...</p>
+        <p className="text-center">No se encontraron carpetas...</p>
       ) : (
-        <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-8 p-5">
+        <ul className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-8 px-5">
           {foldersFilter.map((folder) => (
             <li key={folder.idFolder} className="list-none">
               <Folder
                 name={folder.title}
                 idFolder={folder.idFolder}
-                handleDeleteFolder={handleDeleteFolder} // 5. Ajustado al nombre exacto que recibe tu prop en Folder
+                handleDeleteFolder={handleDeleteFolder}
               />
             </li>
           ))}

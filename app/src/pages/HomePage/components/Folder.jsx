@@ -30,10 +30,7 @@ export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
           <Pencil className="w-4 h-4" />
         </button>
       </div>
-      <div
-        className="cursor-pointer pt-6"
-        onClick={() => enterInPage(idFolder)}
-      >
+      <div className="cursor-pointer" onClick={() => enterInPage(idFolder)}>
         <img src={folder} />
         <h1 className="text-center ">{name}</h1>
       </div>
