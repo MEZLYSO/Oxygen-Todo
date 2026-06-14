@@ -4,13 +4,16 @@ import { HomePage } from "./pages/HomePage/HomePage";
 import { FolderPage } from "./pages/FolderPage/FolderPage";
 import { NotePage } from "./pages/NotePage/NotePage";
 import PrivateGuard from "./guards/PrivateGuard";
+import PublicGuard from "./guards/PublicGuard";
 import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route element={<PublicGuard />}>
+          <Route path="/" element={<LoginPage />} />
+        </Route>
         <Route element={<PrivateGuard />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/folder/:idFolder" element={<FolderPage />} />

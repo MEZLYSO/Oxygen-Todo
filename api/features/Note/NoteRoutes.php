@@ -19,6 +19,11 @@ function NoteRoutes($method, $uri, $body, $noteCtrl)
     return true;
   }
 
+  if ($method == 'PUT' && $uri == '/note') {
+    $noteCtrl->updateNote($body);
+    return true;
+  }
+
   if ($method == 'DELETE' && preg_match('#^/note/(\d+)$#', $uri, $matches)) {
     $id = $matches[1];
     $noteCtrl->deleteNoteById($id);

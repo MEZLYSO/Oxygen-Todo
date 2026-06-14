@@ -1,13 +1,19 @@
 export const NoteCard = ({ idNote, title, content, createdAt, deleteNote }) => {
   return (
-    <div key={idNote} className="">
-      <div className="border-1 border-slate-400 p-2 rounded-sm min-h-[320px] max-w-[250px]">
-        <h3 className="font-bold">{title}</h3>
-        <p className="text-wrap break-words line-clamp-11">{content}</p>
+    <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm min-h-[200px] flex flex-col">
+      <h3 className="font-bold text-gray-800 mb-2 pb-2 border-b border-gray-100">{title}</h3>
+      <p className="text-gray-600 text-sm break-words line-clamp-10 flex-1">{content}</p>
+      <div className="flex gap-2 mt-3 pt-2 border-t border-gray-100">
+        <button
+          onClick={deleteNote}
+          className="bg-cafef text-white text-xs px-3 py-1.5 rounded cursor-pointer hover:bg-cafec"
+        >
+          Eliminar
+        </button>
+        <button className="bg-azulf text-white text-xs px-3 py-1.5 rounded cursor-pointer hover:bg-azulc">
+          Editar
+        </button>
       </div>
-      <button onClick={() => deleteNote(idNote)}>Eliminar</button>
-
-      <button>Update</button>
     </div>
   );
 };

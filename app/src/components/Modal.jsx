@@ -1,9 +1,13 @@
 export const Modal = ({
+  placeholder = "Nombre",
+  titleModal = "Nuevo",
+  textButton = "Crear",
   visible,
   onClose,
-  handleChange,
-  nameFolder,
-  handleCreateFolder,
+  value,
+  onChange,
+  onClick,
+  inputId = "title",
 }) => {
   if (!visible) return null;
   return (
@@ -17,22 +21,22 @@ export const Modal = ({
         className="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-4 flex flex-col gap-4"
       >
         <h2 className="text-azulf font-bold font-[Open_Sans] text-2xl text-center">
-          Nueva carpeta
+          {titleModal}
         </h2>
         <input
-          id="title"
-          onChange={handleChange}
-          value={nameFolder.title}
+          id={inputId}
+          onChange={onChange}
+          value={value}
           type="text"
-          placeholder="Nombre de la carpeta"
+          placeholder={placeholder}
           className="border border-gray-300 text-azulf font-bold font-[Open_Sans] text-lg px-3 py-2 rounded-lg focus:outline-hidden focus:ring-2 focus:ring-cafec focus:border-transparent"
         />
         <button
           type="button"
-          onClick={handleCreateFolder}
+          onClick={onClick}
           className="bg-azulf duration-300 font-bold font-[Open_Sans] text-lg rounded-lg px-2 py-2 text-white cursor-pointer hover:bg-cafec"
         >
-          Crear
+          {textButton}
         </button>
       </form>
     </div>

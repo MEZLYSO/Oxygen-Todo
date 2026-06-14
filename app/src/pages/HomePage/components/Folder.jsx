@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Trash2, Pencil } from "lucide-react";
 import folder from "../../../assets/folder.png";
 
-export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
+export const Folder = ({ name, idFolder, handleDeleteFolder, handleOpenEdit }) => {
   const navigate = useNavigate();
 
   const enterInPage = (id) => {
@@ -25,6 +25,7 @@ export const Folder = ({ name, idFolder, handleDeleteFolder }) => {
           className="bg-azulf text-white p-1.5 rounded cursor-pointer hover:bg-azulc"
           onClick={(e) => {
             e.stopPropagation();
+            handleOpenEdit(idFolder, name);
           }}
         >
           <Pencil className="w-4 h-4" />

@@ -28,7 +28,12 @@ class UserModel {
         return $stmt->execute([$username, $email,$password]);
     }
 
-    public function delete($id) {
+    public function update($id, $username, $email, $password) {
+        $stmt = $this->db->prepare("UPDATE user SET username=?, email=?, password=? WHERE idUser=?");
+        return $stmt->execute([$username, $email, $password, $id]);
+    }
+
+  public function delete($id) {
         $stmt = $this->db->prepare("DELETE FROM user WHERE idUser = ?");
         return $stmt->execute([$id]);
     }

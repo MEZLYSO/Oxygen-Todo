@@ -18,6 +18,11 @@ function UserRoutes($method, $uri, $body, $userCtrl) {
         return true;
     }
 
+    if ($method == 'PUT' && $uri == '/user') {
+        $userCtrl->updateUser($body);
+        return true;
+    }
+
     if ($method == 'DELETE' && preg_match('#^/user/(\d+)$#', $uri, $matches)) {
         $id = $matches[1];
         $userCtrl->destroyUser($id);

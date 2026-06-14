@@ -37,7 +37,7 @@ class FolderController
 
   public function updateTitleFolder($body)
   {
-    $this->model->updateTitle($body['idFolder'], $body['title']);
+    $this->model->updateTitle($body['title'], $body['idFolder']);
     http_response_code(200);
     echo json_encode(['message' => 'folder updated']);
   }

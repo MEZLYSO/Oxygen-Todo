@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 export const LoginPage = () => {
   const [data, setData] = useState({});
@@ -13,19 +14,11 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const resp = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const response = await resp.json();
+      const response = await api.login(data);
       if (response.message) {
         console.log("Error del servidor:", response.message);
         return;
       }
-      console.log(response);
       localStorage.setItem("userData", JSON.stringify(response));
       navigate("/home", { replace: true });
     } catch (err) {

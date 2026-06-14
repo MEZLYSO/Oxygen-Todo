@@ -34,6 +34,12 @@ class NoteModel
     }
   }
 
+  public function update($idNote, $title, $content)
+  {
+    $stmt = $this->db->prepare("UPDATE note SET title=?, content=? WHERE idNote=?");
+    return $stmt->execute([$title, $content, $idNote]);
+  }
+
   public function delete($id)
   {
     $stmt = $this->db->prepare("DELETE FROM note WHERE idNote = ?");

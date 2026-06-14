@@ -1,12 +1,8 @@
-export const Header = ({ title, left, right }) => {
+export const Header = ({ left, center, right }) => {
   return (
-    <div className="bg-azulf w-full h-auto px-5 py-6 flex items-center justify-center">
+    <div className="bg-azulf w-full h-16 px-5 flex items-center justify-center">
       <div className="absolute left-5">{left}</div>
-      {title && (
-        <h1 className="text-white text-center font-extrabold font-[Open_Sans] text-3xl">
-          {title}
-        </h1>
-      )}
+      {center}
       <div className="absolute right-5">{right}</div>
     </div>
   );

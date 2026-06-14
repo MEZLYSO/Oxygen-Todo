@@ -51,6 +51,27 @@ class UserController {
       echo json_encode(['message' => 'user created']);
     }
 
+    public function updateUser($body) {
+      if(!validatorBody($body,["idUser","username","email","password"])){
+        handleError(400,"data incomplete");
+        return;
+      }
+      if (!validatorName($body["username"])) {
+        handleError(400, "username must be between 3 and 50 characters");
+        return;
+      }
+      if (!validatorEmail($body["email"])) {
+        handleError(400, "email invalid");
+        return;
+      }
+      if(!validatorPassword($body["password"])){
+        handleError(400,"password invalid");
+        return;
+      }
+      $this->model->update($body['idUser'], $body['username'], $body['email'], $body['password']);
+      echo json_encode(['message' => 'user updated']);
+    }
+
     public function destroyUser($id) {
         $user = $this->model->findById($id);
         if(!$user){

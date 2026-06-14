@@ -44,4 +44,14 @@ class NoteController
     http_response_code(201);
     echo json_encode(['message' => 'note created']);
   }
+
+  public function updateNote($body)
+  {
+    if (!validatorBody($body, ["idNote", "title", "content"])) {
+      handleError(400, "data incomplete");
+      return;
+    }
+    $this->model->update($body['idNote'], $body['title'], $body['content']);
+    echo json_encode(['message' => 'note updated']);
+  }
 }
