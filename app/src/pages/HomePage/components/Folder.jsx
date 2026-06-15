@@ -15,7 +15,7 @@ export const Folder = ({
   };
 
   return (
-    <div className="relative hover:bg-fondo rounded-xl duration-300 group">
+    <div className="relative hover:bg-[#f4efeb] rounded-xl duration-300 group">
       <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button
           className="bg-cafef text-white p-1.5 rounded cursor-pointer hover:bg-cafec"

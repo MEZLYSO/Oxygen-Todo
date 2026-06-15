@@ -48,7 +48,7 @@ export const LoginPage = () => {
             name=""
             placeholder="*****"
           />
-          <button className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-cafec">Iniciar sesion</button>
+          <button className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-cafef">Iniciar sesion</button>
         </form>
     </section>
   );
