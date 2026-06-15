@@ -21,7 +21,6 @@ class AuthController
       handleError(200, "user error login");
       return;
     }
-    unset($user['password']);
     echo json_encode($user);
   }
 }

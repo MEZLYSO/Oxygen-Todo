@@ -6,6 +6,7 @@ import { NotePage } from "./pages/NotePage/NotePage";
 import PrivateGuard from "./guards/PrivateGuard";
 import PublicGuard from "./guards/PublicGuard";
 import { Toaster } from "react-hot-toast";
+import { UserPage } from "./pages/UserPage/UserPage";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/folder/:idFolder" element={<FolderPage />} />
           <Route path="/note/:idNote" element={<NotePage />} />
+          <Route path="/note/:idNote" element={<NotePage />} />
+          <Route path="/user" element={<UserPage />} />
         </Route>
       </Routes>
       <Toaster position="top-right" />

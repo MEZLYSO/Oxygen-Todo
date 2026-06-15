@@ -2,7 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { Trash2, Pencil } from "lucide-react";
 import folder from "../../../assets/folder.png";
 
-export const Folder = ({ name, idFolder, handleDeleteFolder, handleOpenEdit }) => {
+export const Folder = ({
+  name,
+  idFolder,
+  handleDeleteFolder,
+  handleOpenEdit,
+}) => {
   const navigate = useNavigate();
 
   const enterInPage = (id) => {

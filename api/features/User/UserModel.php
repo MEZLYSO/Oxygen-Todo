@@ -8,11 +8,11 @@ class UserModel {
     }
 
     public function getAll() {
-        return $this->db->query("SELECT idUser,username,email FROM user")->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query("SELECT idUser,username,email,premium FROM user")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function findById($id) {
-     $stmt = $this->db->prepare("SELECT IdUser,username,email FROM user WHERE idUser=?");
+     $stmt = $this->db->prepare("SELECT IdUser,username,email,premium FROM user WHERE idUser=?");
      $stmt->execute([$id]);
      return $stmt->fetch(PDO::FETCH_ASSOC); 
     } 
@@ -24,8 +24,13 @@ class UserModel {
     } 
 
     public function create($username, $email, $password) {
-        $stmt = $this->db->prepare("INSERT INTO user (username, email,password) VALUES (?, ?, ?)");
-        return $stmt->execute([$username, $email,$password]);
+        $stmt = $this->db->prepare("INSERT INTO user (username, email, password, premium) VALUES (?, ?, ?, 0)");
+        return $stmt->execute([$username, $email, $password]);
+    }
+
+    public function updatePremium($id, $premium) {
+        $stmt = $this->db->prepare("UPDATE user SET premium=? WHERE idUser=?");
+        return $stmt->execute([$premium, $id]);
     }
 
     public function update($id, $username, $email, $password) {

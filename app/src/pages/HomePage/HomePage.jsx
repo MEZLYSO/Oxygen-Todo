@@ -1,11 +1,11 @@
+import { User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Header } from "../../components/Header";
-import { LogOut } from "lucide-react";
-import { Modal } from "../../components/Modal";
 import { ButtonFloat } from "../../components/ButtonFloat";
-import { useHomePage } from "./hooks/useHomePage";
-import { SearchBar } from "./components/SearchBar";
+import { Header } from "../../components/Header";
+import { Modal } from "../../components/Modal";
 import { FolderList } from "./components/FolderList";
+import { SearchBar } from "./components/SearchBar";
+import { useHomePage } from "./hooks/useHomePage";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -27,9 +27,8 @@ export const HomePage = () => {
   } = useHomePage();
 
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const handleCloseSession = () => {
-    localStorage.removeItem("userData");
-    navigate("/", { replace: true });
+  const handleChangeUserPage = () => {
+    navigate("/user", { replace: true });
   };
 
   return (
@@ -44,10 +43,10 @@ export const HomePage = () => {
         center={<SearchBar handleSearchCallback={handleSearch} />}
         right={
           <button
-            onClick={handleCloseSession}
+            onClick={handleChangeUserPage}
             className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-1 text-white cursor-pointer hover:bg-cafec"
           >
-            <LogOut />
+            <User />
           </button>
         }
       />
