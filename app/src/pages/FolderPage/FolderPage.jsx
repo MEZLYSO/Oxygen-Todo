@@ -10,6 +10,8 @@ export const FolderPage = () => {
   const { idFolder } = useParams();
   const [notes, setNotes] = useState([]);
 
+  const getUser = () => JSON.parse(localStorage.getItem("userData"));
+  const { premium } = getUser();
   const fetchNotes = async () => {
     try {
       const data = await api.getNotesByFolder(idFolder);
@@ -57,6 +59,8 @@ export const FolderPage = () => {
               <NoteCard
                 key={note.idNote}
                 idNote={note.idNote}
+                idFolder={idFolder}
+                premium={premium}
                 title={note.title}
                 content={note.content}
                 createdAt={note.createdAt}

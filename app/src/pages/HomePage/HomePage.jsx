@@ -35,7 +35,7 @@ export const HomePage = () => {
     <>
       <Header
         left={
-          <span className="flex text-white text-xl font-[Open_Sans] text-4xl gap-2">
+          <span className="flex text-white text-xl font-[Open_Sans] text-4xl gap-1">
             <p className="hidden md:flex">Hola! </p>
             <p className="font-bold">{userData.username}</p>
           </span>

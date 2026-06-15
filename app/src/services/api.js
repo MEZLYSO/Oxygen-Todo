@@ -24,6 +24,6 @@ export const api = {
   deleteNote: (id) => request("DELETE", `/note/${id}`),
 
   login: (body) => request("POST", "/login", body),
-  getUserById: (idUser) => request("GET", `/user/${idUser}`),
+  getUserById: (idUser) => request("GET", `/auth/${idUser}`),
   updatePremium: (body) => request("PUT", "/user/premium", body),
 };

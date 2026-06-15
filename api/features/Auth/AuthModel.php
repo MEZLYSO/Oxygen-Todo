@@ -15,4 +15,11 @@ class AuthModel
     $stmt->execute([$email]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
+
+  public function findById($id)
+  {
+    $stmt = $this->db->prepare("SELECT * FROM user WHERE idUser=?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
 }

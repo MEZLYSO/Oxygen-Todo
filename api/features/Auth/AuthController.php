@@ -23,4 +23,14 @@ class AuthController
     }
     echo json_encode($user);
   }
+
+  public function findUserById($id)
+  {
+    $user = $this->model->findById($id);
+    if (!$user) {
+      handleError(404, "user not found");
+      return;
+    }
+    echo json_encode($user);
+  }
 }

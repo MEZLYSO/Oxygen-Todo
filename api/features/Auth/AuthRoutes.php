@@ -1,13 +1,18 @@
-<?php 
+<?php
 
-function AuthRoutes($method, $uri, $body, $authCtrl) {
+function AuthRoutes($method, $uri, $body, $authCtrl)
+{
 
-    if ($method == 'POST' && $uri == '/login') {
-        $authCtrl->loginUser($body);
-        return true; 
-    }
+  if ($method == 'POST' && $uri == '/login') {
+    $authCtrl->loginUser($body);
+    return true;
+  }
 
-    return false; 
+  if ($method == 'GET' && preg_match('#^/auth/(\d+)$#', $uri, $matches)) {
+    $id = $matches[1];
+    $authCtrl->findUserById($id);
+    return true;
+  }
+
+  return false;
 }
-
-
