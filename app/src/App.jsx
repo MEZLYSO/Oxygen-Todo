@@ -1,14 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LoginPage } from "./pages/LoginPage/LoginPage";
-import { HomePage } from "./pages/HomePage/HomePage";
-import { FolderPage } from "./pages/FolderPage/FolderPage";
-import { NotePage } from "./pages/NotePage/NotePage";
+import { useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RoutesContext } from "./context/RoutesContext";
 import PrivateGuard from "./guards/PrivateGuard";
 import PublicGuard from "./guards/PublicGuard";
-import { Toaster } from "react-hot-toast";
+import { FolderPage } from "./pages/FolderPage/FolderPage";
+import { HomePage } from "./pages/HomePage/HomePage";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
+import { NotePage } from "./pages/NotePage/NotePage";
 import { UserPage } from "./pages/UserPage/UserPage";
-import { RoutesContext } from "./context/RoutesContext";
-import { useState } from "react";
 
 function App() {
   const [folderPage, setFolderPage] = useState("");
