@@ -19,6 +19,7 @@ export const api = {
   deleteFolder: (id) => request("DELETE", `/folder/${id}`),
 
   getNotesByFolder: (idFolder) => request("GET", `/note/${idFolder}`),
+  getNoteById: (idNote) => request("GET", `/folder/note/${idNote}`),
   createNote: (body) => request("POST", "/note", body),
   updateNote: (body) => request("PUT", "/note", body),
   deleteNote: (id) => request("DELETE", `/note/${id}`),
