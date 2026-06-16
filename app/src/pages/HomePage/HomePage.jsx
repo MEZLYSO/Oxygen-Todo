@@ -6,6 +6,8 @@ import { Modal } from "../../components/Modal";
 import { FolderList } from "./components/FolderList";
 import { SearchBar } from "./components/SearchBar";
 import { useHomePage } from "./hooks/useHomePage";
+import logo from "../../assets/logo1.png";
+
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -30,14 +32,14 @@ export const HomePage = () => {
   const handleChangeUserPage = () => {
     navigate("/user", { replace: true });
   };
-
   return (
     <>
       <Header
         left={
           <span className="flex text-white text-xl font-[Open_Sans] text-4xl gap-1">
-            <p className="hidden md:flex">Hola! </p>
-            <p className="font-bold">{userData.username}</p>
+             <img className="hidden md:flex w-15 bg-white/85 rounded-xl " src={logo} alt="" />
+            <p className="hidden md:flex items-center px-3">Hola!  </p>
+            <p className="font-bold hidden md:flex items-center">{userData.username}</p>
           </span>
         }
         center={<SearchBar handleSearchCallback={handleSearch} />}
