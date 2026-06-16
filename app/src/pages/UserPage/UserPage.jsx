@@ -36,7 +36,7 @@ export const UserPage = () => {
         right={
           <button
             onClick={() => handleCloseSession()}
-            className="flex gap-2 bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-red-700"
+            className="flex gap-2 bg-azulc duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-5 py-2 text-azulf mb-3 mt-3 cursor-pointer hover:bg-white"
           >
             <LogOut /> Cerrar sesion
           </button>

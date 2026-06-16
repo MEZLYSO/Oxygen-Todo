@@ -85,7 +85,7 @@ export const FolderPage = () => {
             No hay notas en esta carpeta
           </p>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 ">
             {notes.map((note) => (
               <NoteCard
                 key={note.idNote}

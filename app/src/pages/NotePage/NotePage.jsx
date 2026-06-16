@@ -131,13 +131,13 @@ export const NotePage = () => {
             placeholder="Escribe tu nota en Markdown..."
           />
         ) : (
-          <div className="w-full min-h-[600px] p-8 bg-white border border-gray-200 rounded-lg shadow-sm prose prose-sm max-w-none">
+          <div className="w-full min-h-[600px] p-8 bg-white border border-azulf font-[Open_Sans] rounded-lg shadow-sm prose prose-sm max-w-none">
             <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
           </div>
         )}
         {premium == 1 && (
           <div className="pt-5 flex w-full h-auto justify-center">
-            <button className="text-center bg-blue-500 text-white px-2 py-1 rounded-xl">
+            <button className="text-center bg-azulf text-white px-2 py-1 rounded-xl font-[Open_Sans] hover:bg-cafef">
               Resumir con IA
             </button>
           </div>
