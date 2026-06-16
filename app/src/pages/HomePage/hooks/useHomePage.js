@@ -4,8 +4,8 @@ import { api } from "../../../services/api";
 
 export function useHomePage() {
   const [folders, setFolders] = useState([]);
-  const [nameFolder, setNameFolder] = useState({ title: "" });
   const [foldersFilter, setFoldersFilter] = useState([]);
+  const [nameFolder, setNameFolder] = useState({ title: "" });
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editFolder, setEditFolder] = useState({ idFolder: null, title: "" });
@@ -19,7 +19,7 @@ export function useHomePage() {
       setFolders(data);
       setFoldersFilter(data);
     } catch (err) {
-      console.error(err);
+      toast.error(err.message);
     }
   };
 
@@ -32,19 +32,20 @@ export function useHomePage() {
       setNameFolder({ title: "" });
       setShowModal(false);
       fetchFolders();
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 
   const handleDeleteFolder = async (idFolder) => {
     try {
-      await api.deleteFolder(idFolder);
+      const data = await api.deleteFolder(idFolder);
+      toast.success(data.message);
       const updatedList = folders.filter((f) => f.idFolder !== idFolder);
       setFolders(updatedList);
       setFoldersFilter(updatedList);
     } catch (err) {
-      console.error("Error al eliminar:", err);
+      toast.error(err.message);
     }
   };
 
@@ -68,8 +69,8 @@ export function useHomePage() {
       toast.success(data.message);
       setShowEditModal(false);
       fetchFolders();
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 

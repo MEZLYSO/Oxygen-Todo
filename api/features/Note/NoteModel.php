@@ -21,6 +21,13 @@ class NoteModel
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+  public function getById($id)
+  {
+    $stmt = $this->db->prepare("SELECT * FROM note WHERE idNote=?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
   public function create($title, $content, $idFolder)
   {
     try {

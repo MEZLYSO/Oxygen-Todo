@@ -70,11 +70,13 @@ export const HomePage = () => {
         onChange={handleEditChange}
         onClick={handleUpdateFolder}
       />
-      <FolderList
+      <div className="pt-8">
+        <FolderList
         listFolders={foldersFilter}
         handleDeleteFolder={handleDeleteFolder}
         handleOpenEdit={handleOpenEdit}
       />
+      </div>
       <ButtonFloat handleClick={() => setShowModal(true)} />
     </>
   );

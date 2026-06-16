@@ -1,5 +1,8 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Trash2 } from "lucide-react";
 import { RoutesContext } from "../../../context/RoutesContext";
 
 export const NoteCard = ({
@@ -7,11 +10,9 @@ export const NoteCard = ({
   idFolder,
   title,
   content,
-  premium,
   deleteNote,
 }) => {
   const navigate = useNavigate();
-
   const { setFolderPage } = useContext(RoutesContext);
 
   const handleClickNote = (idNote) => {
@@ -20,34 +21,28 @@ export const NoteCard = ({
   };
 
   return (
-    <div
-      onClick={() => handleClickNote(idNote)}
-      className="bg-white border border-gray-200 p-4 rounded-md shadow-sm min-h-[200px] flex flex-col"
-    >
-      <h3 className="font-bold text-gray-800 mb-2 pb-2 border-b border-gray-100">
-        {title}
-      </h3>
-      <p className="text-gray-600 text-sm break-words line-clamp-10 flex-1">
-        {content}
-      </p>
-      <div className="flex gap-2 mt-3 pt-2 border-t border-gray-100">
+    <div className="relative bg-white border border-gray-200 rounded-lg shadow-sm min-h-[220px] flex flex-col group">
+      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
         <button
-          onClick={deleteNote}
-          className="bg-cafef text-white text-xs px-3 py-1.5 rounded cursor-pointer hover:bg-cafec"
+          className="bg-cafef text-white p-1.5 rounded cursor-pointer hover:bg-cafec"
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteNote(idNote);
+          }}
         >
-          Eliminar
+          <Trash2 className="w-4 h-4" />
         </button>
-        {premium == 1 ? (
-          <button className="bg-azulf text-white text-xs px-3 py-1.5 rounded cursor-pointer hover:bg-azulc">
-            IA
-          </button>
-        ) : (
-          <></>
-        )}
-
-        <button className="bg-azulf text-white text-xs px-3 py-1.5 rounded cursor-pointer hover:bg-azulc">
-          Editar
-        </button>
+      </div>
+      <div
+        onClick={() => handleClickNote(idNote)}
+        className="flex flex-col flex-1 p-4 cursor-pointer"
+      >
+        <h3 className="font-bold text-gray-800 mb-2 pb-2 border-b border-gray-100">
+          {title}
+        </h3>
+        <div className="text-gray-600 text-sm break-words line-clamp-10 flex-1 prose prose-sm max-w-none">
+          <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+        </div>
       </div>
     </div>
   );

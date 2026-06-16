@@ -24,10 +24,16 @@ class NoteController
     echo json_encode($notes);
   }
 
+  public function getByNoteId($idNote)
+  {
+    $note = $this->model->getById($idNote);
+    echo json_encode($note);
+  }
+
   public function deleteNoteById($idNote)
   {
     $this->model->delete($idNote);
-    echo json_encode(['message' => 'note delete']);
+    echo json_encode(['message' => 'note deleted']);
   }
 
   public function createNote($body)

@@ -57,5 +57,5 @@ if (!$FoundRouter) {
 
 if (!$FoundRouter) {
   http_response_code(404);
-  echo json_encode(["error" => "Endpoint not found"]);
+  echo json_encode(["message" => "endpoint not found"]);
 }

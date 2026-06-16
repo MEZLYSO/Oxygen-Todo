@@ -35,7 +35,7 @@ class UserController
       return;
     }
     if (!validatorName($body["username"])) {
-      handleError(400, "username must be between 3 and 50 characters");
+      handleError(400, "invalid username");
       return;
     }
     if (!validatorEmail($body["email"])) {
@@ -63,7 +63,7 @@ class UserController
       return;
     }
     if (!validatorName($body["username"])) {
-      handleError(400, "username must be between 3 and 50 characters");
+      handleError(400, "invalid username");
       return;
     }
     if (!validatorEmail($body["email"])) {

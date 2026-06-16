@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { NoteCard } from "./components/NoteCard";
 import { Header } from "../../components/Header";
+import { Modal } from "../../components/Modal";
 import { ChevronsLeft } from "lucide-react";
 import { ButtonFloat } from "../../components/ButtonFloat";
 import { api } from "../../services/api";
@@ -9,9 +11,10 @@ import { api } from "../../services/api";
 export const FolderPage = () => {
   const { idFolder } = useParams();
   const [notes, setNotes] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [noteTitle, setNoteTitle] = useState("");
 
   const getUser = () => JSON.parse(localStorage.getItem("userData"));
-  const { premium } = getUser();
   const fetchNotes = async () => {
     try {
       const data = await api.getNotesByFolder(idFolder);
@@ -24,9 +27,26 @@ export const FolderPage = () => {
   const deleteNote = async (idNote) => {
     try {
       const data = await api.deleteNote(idNote);
-      console.log(data);
+      toast.success(data.message);
+      fetchNotes();
     } catch (err) {
-      console.error("Error al eliminar la nota:", err);
+      toast.error(err.message);
+    }
+  };
+
+  const handleCreateNote = async () => {
+    if (!noteTitle.trim()) {
+      toast.error("Ingresa un título");
+      return;
+    }
+    try {
+      const data = await api.createNote({ title: noteTitle, content: `# ${noteTitle}`, idFolder });
+      toast.success(data.message);
+      setShowModal(false);
+      setNoteTitle("");
+      fetchNotes();
+    } catch (err) {
+      toast.error(err.message);
     }
   };
 
@@ -48,6 +68,16 @@ export const FolderPage = () => {
           </button>
         }
       />
+      <Modal
+        titleModal="Nueva nota"
+        textButton="Crear"
+        placeholder="Título de la nota"
+        visible={showModal}
+        onClose={() => { setShowModal(false); setNoteTitle(""); }}
+        value={noteTitle}
+        onChange={(e) => setNoteTitle(e.target.value)}
+        onClick={handleCreateNote}
+      />
       <div className="p-5">
         {notes.length === 0 ? (
           <p className="text-center text-azulf text-2xl font-bold font-[Open_Sans] mt-10">
@@ -60,7 +90,6 @@ export const FolderPage = () => {
                 key={note.idNote}
                 idNote={note.idNote}
                 idFolder={idFolder}
-                premium={premium}
                 title={note.title}
                 content={note.content}
                 createdAt={note.createdAt}
@@ -70,7 +99,7 @@ export const FolderPage = () => {
           </div>
         )}
       </div>
-      <ButtonFloat handleClick={() => alert("Hola")} />
+      <ButtonFloat handleClick={() => setShowModal(true)} />
     </>
   );
 };

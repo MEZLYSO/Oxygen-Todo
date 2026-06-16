@@ -18,7 +18,7 @@ class AuthController
       return;
     }
     if ($user['password'] != $body['password']) {
-      handleError(200, "user error login");
+      handleError(200, "login failed");
       return;
     }
     echo json_encode($user);
