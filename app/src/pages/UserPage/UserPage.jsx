@@ -12,6 +12,7 @@ export const UserPage = () => {
     userDataUpdate,
     handleCloseSession,
     handleClickPremium,
+    fetchUserData,
   } = usePageUser();
   const navigate = useNavigate();
 
@@ -20,11 +21,16 @@ export const UserPage = () => {
   };
 
   const handleUpdate = async () => {
-    const data = await api.updateUser({
-      idUser: userData.idUser,
-      ...userDataUpdate,
-    });
-    toast.success(JSON.stringify(data.message));
+    try {
+      const data = await api.updateUser({
+        idUser: userData.idUser,
+        ...userDataUpdate,
+      });
+      toast.success(data.message);
+      fetchUserData();
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -61,6 +67,7 @@ export const UserPage = () => {
           Username:
         </label>
         <input
+          id="username"
           type="text"
           onChange={handleChange}
           defaultValue={userData.username}
@@ -70,6 +77,7 @@ export const UserPage = () => {
           Email:
         </label>
         <input
+          id="email"
           type="text"
           onChange={handleChange}
           defaultValue={userData.email}
@@ -79,6 +87,7 @@ export const UserPage = () => {
           Password:
         </label>
         <input
+          id="password"
           type="text"
           onChange={handleChange}
           defaultValue={userData.password}

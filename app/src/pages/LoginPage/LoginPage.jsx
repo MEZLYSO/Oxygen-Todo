@@ -14,7 +14,6 @@ export const LoginPage = () => {
     setRegistro(!registro);
   };
 
-
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
   };
@@ -22,6 +21,13 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (registro) {
+        await api.register(data);
+        toast.success("user created");
+        setRegistro(false);
+        setData({ email: data.email, password: data.password });
+        return;
+      }
       const response = await api.login(data);
       if (response.message) {
         toast.error(response.message);
@@ -42,30 +48,27 @@ export const LoginPage = () => {
       <div className="w-1/2 flex justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col">
           <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans] gap-3">
-            {
-              registro? "Registrar" : "Iniciar sesión"
-            }
+            {registro ? "Registrar" : "Iniciar sesión"}
           </h2>
 
-            {
-              registro && (
-                <>
-                  <label htmlFor="username"
-                    className="py-2 px-1 font-bold font-[Open_Sans] text-xl text-cafef"
-                  >
-                    Nombre usuario:
-                  </label>
-                <input
-                  id="username"
-                  onChange={handleChange}
-                  className="border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
-                  type="user"
-                  name=""
-                  placeholder="juanperez"
-                />
-                </>
-              )
-            }
+          {registro && (
+            <>
+              <label
+                htmlFor="username"
+                className="py-2 px-1 font-bold font-[Open_Sans] text-xl text-cafef"
+              >
+                Nombre usuario:
+              </label>
+              <input
+                id="username"
+                onChange={handleChange}
+                className="border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
+                type="user"
+                name=""
+                placeholder="juanperez"
+              />
+            </>
+          )}
 
           <label
             htmlFor="email"
@@ -96,20 +99,14 @@ export const LoginPage = () => {
             placeholder="*****"
           />
           <button className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-cafef">
-            {
-              registro? "Registrarse" : "Iniciar sesión"
-            }
+            {registro ? "Registrarse" : "Iniciar sesión"}
           </button>
 
           <p className="text-cafef font-[Open-Sans] mt-3 flex justify-center gap-3">
-            {
-              registro? "¿Ya tienes una cuenta?  " : "¿No tienes una cuenta?  "
-            }
+            {registro ? "¿Ya tienes una cuenta?  " : "¿No tienes una cuenta?  "}
             <button onClick={changeState} type="button" className="text-azulf">
-              {
-                registro? " Inicia sesión " : " Registrate "
-              }
-                aquí
+              {registro ? " Inicia sesión " : " Registrate "}
+              aquí
             </button>
           </p>
         </form>
