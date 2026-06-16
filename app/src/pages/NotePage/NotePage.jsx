@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ChevronsLeft, Pencil, Save, X } from "lucide-react";
+import { ChevronsLeft, Pencil, Save, X, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { Header } from "../../components/Header";
 import { RoutesContext } from "../../context/RoutesContext";
@@ -10,6 +10,8 @@ import { api } from "../../services/api";
 
 export const NotePage = () => {
   const { idNote } = useParams();
+  const localUser = () => JSON.parse(localStorage.getItem("userData"));
+  const { premium } = localUser();
   const [noteData, setNoteData] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -131,6 +133,13 @@ export const NotePage = () => {
         ) : (
           <div className="w-full min-h-[600px] p-8 bg-white border border-gray-200 rounded-lg shadow-sm prose prose-sm max-w-none">
             <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+          </div>
+        )}
+        {premium == 1 && (
+          <div className="pt-5 flex w-full h-auto justify-center">
+            <button className="text-center bg-blue-500 text-white px-2 py-1 rounded-2xl">
+              Resumir con IA
+            </button>
           </div>
         )}
       </div>

@@ -15,6 +15,7 @@ export const FolderPage = () => {
   const [noteTitle, setNoteTitle] = useState("");
 
   const getUser = () => JSON.parse(localStorage.getItem("userData"));
+  const user = getUser();
   const fetchNotes = async () => {
     try {
       const data = await api.getNotesByFolder(idFolder);
@@ -35,12 +36,12 @@ export const FolderPage = () => {
   };
 
   const handleCreateNote = async () => {
-    if (!noteTitle.trim()) {
+    if (noteTitle.trim() == "") {
       toast.error("Ingresa un título");
       return;
     }
     try {
-      const data = await api.createNote({ title: noteTitle, content: `# ${noteTitle}`, idFolder });
+      const data = await api.createNote({ title: noteTitle, content: `# ${noteTitle}`, idFolder: idFolder });
       toast.success(data.message);
       setShowModal(false);
       setNoteTitle("");

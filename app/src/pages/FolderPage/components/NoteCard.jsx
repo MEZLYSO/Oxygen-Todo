@@ -10,6 +10,7 @@ export const NoteCard = ({
   idFolder,
   title,
   content,
+  createdAt,
   deleteNote,
 }) => {
   const navigate = useNavigate();
@@ -37,10 +38,11 @@ export const NoteCard = ({
         onClick={() => handleClickNote(idNote)}
         className="flex flex-col flex-1 p-4 cursor-pointer"
       >
-        <h3 className="font-bold text-gray-800 mb-2 pb-2 border-b border-gray-100">
-          {title}
-        </h3>
-        <div className="text-gray-600 text-sm break-words line-clamp-10 flex-1 prose prose-sm max-w-none">
+        <h3 className="font-bold text-gray-800 mb-2 ">{title}</h3>
+        <p className="text-gray-600 text-sm italic border-b border-gray-100 pb-2">
+          {new Date(createdAt).toLocaleDateString("es-MX")}
+        </p>
+        <div className="text-gray-600 text-sm break-words line-clamp-10 flex-1 max-w-none">
           <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
         </div>
       </div>

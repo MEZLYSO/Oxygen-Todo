@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { api } from "../../../services/api";
 
@@ -9,6 +9,7 @@ export function useHomePage() {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editFolder, setEditFolder] = useState({ idFolder: null, title: "" });
+  const debugCount = useRef(0);
 
   const getUser = () => JSON.parse(localStorage.getItem("userData"));
 
@@ -24,8 +25,10 @@ export function useHomePage() {
   };
 
   const handleCreateFolder = async () => {
-    if (!nameFolder.title || nameFolder.title.trim() === "") return;
+    console.log("creando carpeta...");
+    if (!nameFolder.title || nameFolder.title.trim() == "") return;
     try {
+      debugCount.current = debugCount.current + 1;
       const { idUser } = getUser();
       const data = await api.createFolder({ ...nameFolder, idUser });
       toast.success(data.message);
