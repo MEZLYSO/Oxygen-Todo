@@ -13,6 +13,12 @@ function NoteRoutes($method, $uri, $body, $noteCtrl)
     return true;
   }
 
+  if ($method == 'GET' && preg_match('#^/folder/note/(\d+)$#', $uri, $matches)) {
+    $id = $matches[1];
+    $noteCtrl->getByNoteId($id);
+    return true;
+  }
+
   if ($method == 'GET' && preg_match('#^/note/(\d+)$#', $uri, $matches)) {
     $id = $matches[1];
     $noteCtrl->getAllByFolderId($id);

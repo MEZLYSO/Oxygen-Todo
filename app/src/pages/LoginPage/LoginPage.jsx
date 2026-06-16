@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { api } from "../../services/api";
 
 export const LoginPage = () => {
@@ -16,13 +17,13 @@ export const LoginPage = () => {
     try {
       const response = await api.login(data);
       if (response.message) {
-        console.log("Error del servidor:", response.message);
+        toast.error(response.message);
         return;
       }
       localStorage.setItem("userData", JSON.stringify(response));
       navigate("/home", { replace: true });
     } catch (err) {
-      console.log("Error en la peticion:", err.message);
+      toast.error(err.message);
     }
   };
 

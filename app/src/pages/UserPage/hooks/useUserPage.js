@@ -12,21 +12,29 @@ export function usePageUser() {
   const localUser = () => JSON.parse(localStorage.getItem("userData"));
 
   const fetchUserData = async () => {
-    const { idUser } = localUser();
-    const data = await api.getUserById(idUser);
-    setUserData(data);
-    localStorage.setItem("userData", JSON.stringify(data));
+    try {
+      const { idUser } = localUser();
+      const data = await api.getUserById(idUser);
+      setUserData(data);
+      localStorage.setItem("userData", JSON.stringify(data));
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   const handleClickPremium = async () => {
-    const { idUser, premium } = localUser();
-    const updatedPremiumValue = premium == 1 ? 0 : 1;
-    const status = await api.updatePremium({
-      idUser,
-      premium: updatedPremiumValue,
-    });
-    fetchUserData();
-    toast.success(status.message);
+    try {
+      const { idUser, premium } = localUser();
+      const updatedPremiumValue = premium == 1 ? 0 : 1;
+      const data = await api.updatePremium({
+        idUser,
+        premium: updatedPremiumValue,
+      });
+      fetchUserData();
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   useEffect(() => {
