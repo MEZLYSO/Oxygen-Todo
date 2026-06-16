@@ -5,9 +5,15 @@ import { api } from "../../services/api";
 import icon from "../../assets/img.png";
 
 export const LoginPage = () => {
+  const [registro, setRegistro] = useState(false);
   const [data, setData] = useState({});
 
   const navigate = useNavigate();
+
+  const changeState = () => {
+    setRegistro(!registro);
+  };
+
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
@@ -35,12 +41,35 @@ export const LoginPage = () => {
       </div>
       <div className="w-1/2 flex justify-center">
         <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col">
-          <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans]">
-            Iniciar sesion
+          <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans] gap-3">
+            {
+              registro? "Registrar" : "Iniciar sesión"
+            }
           </h2>
+
+            {
+              registro && (
+                <>
+                  <label htmlFor="username"
+                    className="py-2 px-1 font-bold font-[Open_Sans] text-xl text-cafef"
+                  >
+                    Nombre usuario:
+                  </label>
+                <input
+                  id="username"
+                  onChange={handleChange}
+                  className="border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
+                  type="user"
+                  name=""
+                  placeholder="juanperez"
+                />
+                </>
+              )
+            }
+
           <label
             htmlFor="email"
-            className="py-2 px-1 mt-20 font-bold font-[Open_Sans] text-xl text-cafef"
+            className="py-2 px-1 mt-3 font-bold font-[Open_Sans] text-xl text-cafef"
           >
             Correo:
           </label>
@@ -67,8 +96,22 @@ export const LoginPage = () => {
             placeholder="*****"
           />
           <button className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-cafef">
-            Iniciar sesion
+            {
+              registro? "Registrarse" : "Iniciar sesión"
+            }
           </button>
+
+          <p className="text-cafef font-[Open-Sans] mt-3 flex justify-center gap-3">
+            {
+              registro? "¿Ya tienes una cuenta?  " : "¿No tienes una cuenta?  "
+            }
+            <button onClick={changeState} type="button" className="text-azulf">
+              {
+                registro? " Inicia sesión " : " Registrate "
+              }
+                aquí
+            </button>
+          </p>
         </form>
       </div>
     </section>

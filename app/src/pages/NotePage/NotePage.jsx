@@ -73,7 +73,7 @@ export const NotePage = () => {
         left={
           <button
             onClick={handleGoBack}
-            className="flex gap-2 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-cafec"
+            className="flex gap-2 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-cafec"
           >
             <ChevronsLeft /> Regresar
           </button>
@@ -81,7 +81,7 @@ export const NotePage = () => {
         center={
           editing ? (
             <input
-              className="text-center bg-white rounded px-4 py-1 text-lg font-bold font-[Open_Sans] text-azulf outline-none"
+              className="text-center bg-white rounded-xl px-4 py-1 text-lg font-bold font-[Open_Sans] text-azulf outline-none"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -96,13 +96,13 @@ export const NotePage = () => {
             <div className="flex gap-2">
               <button
                 onClick={handleCancel}
-                className="flex gap-1 items-center bg-white text-gray-600 font-bold font-[Open_Sans] rounded px-4 py-2 cursor-pointer hover:bg-gray-100"
+                className="flex gap-1 items-center bg-white text-gray-600 font-bold font-[Open_Sans] rounded-xl px-4 py-2 cursor-pointer hover:bg-gray-100"
               >
                 <X size={18} /> Cancelar
               </button>
               <button
                 onClick={handleSave}
-                className="flex gap-1 items-center bg-cafef duration-300 font-bold font-[Open_Sans] rounded px-4 py-2 text-white cursor-pointer hover:bg-cafec"
+                className="flex gap-1 items-center bg-cafef duration-300 font-bold font-[Open_Sans] rounded-xl px-4 py-2 text-white cursor-pointer hover:bg-cafec"
               >
                 <Save size={18} /> Guardar
               </button>
@@ -110,7 +110,7 @@ export const NotePage = () => {
           ) : (
             <button
               onClick={() => setEditing(true)}
-              className="flex gap-1 items-center bg-azulc duration-300 font-bold font-[Open_Sans] rounded px-4 py-2 text-azulf cursor-pointer hover:bg-white"
+              className="flex gap-1 items-center bg-azulc duration-300 font-bold font-[Open_Sans] rounded-xl px-4 py-2 text-azulf cursor-pointer hover:bg-white"
             >
               <Pencil size={18} /> Editar
             </button>
@@ -137,7 +137,7 @@ export const NotePage = () => {
         )}
         {premium == 1 && (
           <div className="pt-5 flex w-full h-auto justify-center">
-            <button className="text-center bg-blue-500 text-white px-2 py-1 rounded-2xl">
+            <button className="text-center bg-blue-500 text-white px-2 py-1 rounded-xl">
               Resumir con IA
             </button>
           </div>

@@ -63,7 +63,7 @@ export const FolderPage = () => {
         left={
           <button
             onClick={() => navigate("/home", { replace: true })}
-            className="flex gap-2 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-cafec"
+            className="flex gap-2 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-cafec"
           >
             <ChevronsLeft /> Regresar
           </button>

@@ -46,7 +46,7 @@ export const HomePage = () => {
         right={
           <button
             onClick={handleChangeUserPage}
-            className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded px-2 py-1 text-white cursor-pointer hover:bg-cafec"
+            className="flex gap-3 bg-cafef duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-2 py-1 text-white cursor-pointer hover:bg-cafec"
           >
             <User />
           </button>
