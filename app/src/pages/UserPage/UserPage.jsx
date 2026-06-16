@@ -1,19 +1,30 @@
-import { Crown, Save } from "lucide-react";
+import { ChevronsLeft, Crown, LogOut, Save } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header.jsx";
+import { api } from "../../services/api.js";
 import { usePageUser } from "./hooks/useUserPage.js";
-import { ChevronsLeft } from "lucide-react";
-import { LogOut } from "lucide-react";
-
+import toast from "react-hot-toast";
 
 export const UserPage = () => {
-  const { userData, handleClickPremium } = usePageUser();
-
+  const {
+    userData,
+    setUserDataUpdate,
+    userDataUpdate,
+    handleCloseSession,
+    handleClickPremium,
+  } = usePageUser();
   const navigate = useNavigate();
 
-  const handleCloseSession = () => {
-    localStorage.removeItem("userData");
-    navigate("/", { replace: true });
+  const handleChange = (e) => {
+    setUserDataUpdate({ ...userDataUpdate, [e.target.id]: e.target.value });
+  };
+
+  const handleUpdate = async () => {
+    const data = await api.updateUser({
+      idUser: userData.idUser,
+      ...userDataUpdate,
+    });
+    toast.success(JSON.stringify(data.message));
   };
 
   return (
@@ -42,12 +53,16 @@ export const UserPage = () => {
           </button>
         }
       />
-      <form className="flex flex-col  gap-2 items-center mt-15 bg-fondo">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="flex flex-col h-100 gap-2 items-center mt-15 bg-fondo"
+      >
         <label className="py-2 px-1 font-bold font-[Open_Sans] text-xl text-cafef">
           Username:
         </label>
         <input
           type="text"
+          onChange={handleChange}
           defaultValue={userData.username}
           className="border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
         />
@@ -56,6 +71,7 @@ export const UserPage = () => {
         </label>
         <input
           type="text"
+          onChange={handleChange}
           defaultValue={userData.email}
           className="border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
         />
@@ -64,11 +80,15 @@ export const UserPage = () => {
         </label>
         <input
           type="text"
+          onChange={handleChange}
           defaultValue={userData.password}
           className="border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
         />
         <div>
-          <button className="flex bg-green-700 duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-cafef">
+          <button
+            onClick={() => handleUpdate()}
+            className="flex bg-green-700 duration-300 font-bold font-[Open_Sans] text-xl rounded-xl px-5 py-2 text-white mb-3 mt-3 cursor-pointer hover:bg-cafef"
+          >
             Guardar Cambios <Save />
           </button>
         </div>

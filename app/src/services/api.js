@@ -27,4 +27,5 @@ export const api = {
   login: (body) => request("POST", "/login", body),
   getUserById: (idUser) => request("GET", `/auth/${idUser}`),
   updatePremium: (body) => request("PUT", "/user/premium", body),
+  updateUser: (body) => request("PUT", "/user", body),
 };

@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { api } from "../../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export function usePageUser() {
+  const navigate = useNavigate();
+
   const [userData, setUserData] = useState({
     username: "",
     email: "",
     premium: 0,
+  });
+
+  const [userDataUpdate, setUserDataUpdate] = useState({
+    username: "",
+    email: "",
+    password: "",
   });
 
   const localUser = () => JSON.parse(localStorage.getItem("userData"));
@@ -16,6 +25,11 @@ export function usePageUser() {
       const { idUser } = localUser();
       const data = await api.getUserById(idUser);
       setUserData(data);
+      setUserDataUpdate({
+        username: data.username || "",
+        email: data.email || "",
+        password: data.password || "",
+      });
       localStorage.setItem("userData", JSON.stringify(data));
     } catch (err) {
       toast.error(err.message);
@@ -37,6 +51,11 @@ export function usePageUser() {
     }
   };
 
+  const handleCloseSession = () => {
+    localStorage.removeItem("userData");
+    navigate("/", { replace: true });
+  };
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -46,5 +65,8 @@ export function usePageUser() {
     setUserData,
     fetchUserData,
     handleClickPremium,
+    handleCloseSession,
+    userDataUpdate,
+    setUserDataUpdate,
   };
 }
