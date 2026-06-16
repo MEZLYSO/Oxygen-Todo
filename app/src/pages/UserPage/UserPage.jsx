@@ -29,7 +29,7 @@ export const UserPage = () => {
           </button>
         }
         center={
-          <p className="text-white text-2xl font-[Open_Sans] font-bold">
+          <p className="text-azulc text-2xl font-[Open_Sans] font-bold">
             Cuenta
           </p>
         }
