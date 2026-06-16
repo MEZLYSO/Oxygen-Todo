@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { api } from "../../services/api";
 import icon from "../../assets/img.png";
 
-
 export const LoginPage = () => {
   const [data, setData] = useState({});
 
@@ -30,11 +29,21 @@ export const LoginPage = () => {
   };
 
   return (
-    <section className="bg-fondo flex items-center">
-      <img src={icon} alt="" />
-      <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col">
-          <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans]">Iniciar sesion</h2>
-          <label htmlFor="email" className="py-2 px-1 mt-20 font-bold font-[Open_Sans] text-xl text-cafef">Correo:</label>
+    <section className="bg-fondo h-screen w-screen flex items-center">
+      <div className="w-1/2 h-full object-cover">
+        <img className="object-cover w-full h-full" src={icon} alt="" />
+      </div>
+      <div className="w-1/2 flex justify-center">
+        <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col">
+          <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans]">
+            Iniciar sesion
+          </h2>
+          <label
+            htmlFor="email"
+            className="py-2 px-1 mt-20 font-bold font-[Open_Sans] text-xl text-cafef"
+          >
+            Correo:
+          </label>
           <input
             id="email"
             onChange={handleChange}
@@ -43,7 +52,12 @@ export const LoginPage = () => {
             name=""
             placeholder="juanperez@gmail.com"
           />
-          <label htmlFor="password" className="mt-10 font-bold font-[Open_Sans] text-xl text-cafef">Contraseña:</label>
+          <label
+            htmlFor="password"
+            className="mt-10 font-bold font-[Open_Sans] text-xl text-cafef"
+          >
+            Contraseña:
+          </label>
           <input
             id="password"
             onChange={handleChange}
@@ -52,8 +66,11 @@ export const LoginPage = () => {
             name=""
             placeholder="*****"
           />
-          <button className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-cafef">Iniciar sesion</button>
+          <button className="bg-azulf duration-300 font-bold font-[Open_Sans] text-xl rounded-2xl px-2 py-2 text-white mt-10 gap-3 cursor-pointer hover:bg-cafef">
+            Iniciar sesion
+          </button>
         </form>
+      </div>
     </section>
   );
 };
