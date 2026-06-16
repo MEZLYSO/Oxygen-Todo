@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { api } from "../../services/api";
+import icon from "../../assets/img.png";
+
 
 export const LoginPage = () => {
   const [data, setData] = useState({});
@@ -28,7 +30,8 @@ export const LoginPage = () => {
   };
 
   return (
-    <section className="h-screen bg-fondo flex justify-center items-center px-4">
+    <section className="bg-fondo flex items-center">
+      <img src={icon} alt="" />
       <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col">
           <h2 className="text-5xl text-center font-bold text-azulf font-[Open_Sans]">Iniciar sesion</h2>
           <label htmlFor="email" className="py-2 px-1 mt-20 font-bold font-[Open_Sans] text-xl text-cafef">Correo:</label>

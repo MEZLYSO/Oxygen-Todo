@@ -41,7 +41,7 @@ export const UserPage = () => {
           </button>
         }
       />
-      <form className="flex flex-col gap-2 items-center mt-15 h-screen bg-fondo">
+      <form className="flex flex-col h-100 gap-2 items-center mt-15 bg-fondo">
         <label className="py-2 px-1 font-bold font-[Open_Sans] text-xl text-cafef">
           Username:
         </label>
