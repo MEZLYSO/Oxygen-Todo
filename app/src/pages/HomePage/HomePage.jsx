@@ -37,7 +37,7 @@ export const HomePage = () => {
       <Header
         left={
           <span className="flex text-white text-xl font-[Open_Sans] text-4xl gap-1">
-             <img className="hidden md:flex w-15 bg-white/85 rounded-xl " src={logo} alt="" />
+             <img className="hidden md:flex w-15 bg-white rounded-xl " src={logo} alt="" />
             <p className="hidden md:flex items-center px-3">Hola!  </p>
             <p className="font-bold hidden md:flex items-center">{userData.username}</p>
           </span>
