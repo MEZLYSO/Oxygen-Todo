@@ -19,9 +19,7 @@ export function useHomePage() {
       const data = await api.getFoldersByUser(idUser);
       setFolders(data);
       setFoldersFilter(data);
-    } catch (err) {
-      toast.error(err.message);
-    }
+    } catch (err) {}
   };
 
   const handleCreateFolder = async () => {
@@ -68,7 +66,10 @@ export function useHomePage() {
   const handleUpdateFolder = async () => {
     if (!editFolder.title || editFolder.title.trim() === "") return;
     try {
-      const data = await api.updateFolder({ idFolder: editFolder.idFolder, title: editFolder.title });
+      const data = await api.updateFolder({
+        idFolder: editFolder.idFolder,
+        title: editFolder.title,
+      });
       toast.success(data.message);
       setShowEditModal(false);
       fetchFolders();
@@ -112,3 +113,4 @@ export function useHomePage() {
     handleUpdateFolder,
   };
 }
+
