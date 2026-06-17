@@ -1,4 +1,5 @@
 data
 database.db
 .fresh
+.env
 node_modules

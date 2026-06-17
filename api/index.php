@@ -1,4 +1,5 @@
 <?php
+$env = parse_ini_file(__DIR__ . '/.env');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
@@ -16,6 +17,8 @@ require __DIR__ . '/features/Auth/AuthRoutes.php';
 require __DIR__ . '/features/Note/NoteModel.php';
 require __DIR__ . '/features/Note/NoteController.php';
 require __DIR__ . '/features/Note/NoteRoutes.php';
+require __DIR__ . '/features/PayPal/PayPalController.php';
+require __DIR__ . '/features/PayPal/PayPalRoutes.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -43,6 +46,8 @@ $authCtrl   = new AuthController($authModel);
 $noteModel  = new noteModel($db);
 $noteCtrl   = new noteController($noteModel);
 
+$paypalCtrl = new PayPalController($userModel);
+
 $FoundRouter = UserRoutes($method, $uri, $body, $userCtrl);
 if (!$FoundRouter) {
   $FoundRouter = FolderRoutes($method, $uri, $body, $folderCtrl);
@@ -53,7 +58,9 @@ if (!$FoundRouter) {
 if (!$FoundRouter) {
   $FoundRouter = NoteRoutes($method, $uri, $body, $noteCtrl);
 }
-
+if (!$FoundRouter) {
+  $FoundRouter = PayPalRoutes($method, $uri, $body, $paypalCtrl);
+}
 
 if (!$FoundRouter) {
   http_response_code(404);

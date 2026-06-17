@@ -11,6 +11,7 @@ import { api } from "../../services/api";
 export const FolderPage = () => {
   const { idFolder } = useParams();
   const [notes, setNotes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [noteTitle, setNoteTitle] = useState("");
 
@@ -51,6 +52,10 @@ export const FolderPage = () => {
     }
   };
 
+  const notesFilter = notes.filter((note) =>
+    note.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,6 +73,14 @@ export const FolderPage = () => {
             <ChevronsLeft /> Regresar
           </button>
         }
+        center={
+          <input
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-[200px] md:w-[350px] sm:w-[500px] bg-white border-1 text-azulf font-bold font-[Open_Sans] text-xl py-2 px-2 rounded-xl focus:outline-hidden focus:border-cafec"
+            type="text"
+            placeholder="Buscar nota..."
+          />
+        }
       />
       <Modal
         titleModal="Nueva nota"
@@ -80,13 +93,13 @@ export const FolderPage = () => {
         onClick={handleCreateNote}
       />
       <div className="p-5">
-        {notes.length === 0 ? (
+        {notesFilter.length === 0 ? (
           <p className="text-center text-azulf text-2xl font-bold font-[Open_Sans] mt-10">
-            No hay notas en esta carpeta
+            {notes.length === 0 ? "No hay notas en esta carpeta" : "No se encontraron notas"}
           </p>
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 ">
-            {notes.map((note) => (
+            {notesFilter.map((note) => (
               <NoteCard
                 key={note.idNote}
                 idNote={note.idNote}

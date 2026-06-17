@@ -1,9 +1,16 @@
 import { ChevronsLeft, Crown, LogOut, Save } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Header } from "../../components/Header.jsx";
 import { api } from "../../services/api.js";
 import { usePageUser } from "./hooks/useUserPage.js";
 import toast from "react-hot-toast";
+
+const initialOptions = {
+  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+  currency: "MXN",
+  intent: "capture",
+};
 
 export const UserPage = () => {
   const {
@@ -11,11 +18,13 @@ export const UserPage = () => {
     setUserDataUpdate,
     userDataUpdate,
     handleCloseSession,
-    handleClickPremium,
+    handleBuyPremium,
+    handleCancelPremium,
     fetchUserData,
+    showPayPal,
+    setShowPayPal,
   } = usePageUser();
   const navigate = useNavigate();
-
   const handleChange = (e) => {
     setUserDataUpdate({ ...userDataUpdate, [e.target.id]: e.target.value });
   };
@@ -31,6 +40,32 @@ export const UserPage = () => {
     } catch (err) {
       toast.error(err.message);
     }
+  };
+
+  const createOrder = async (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: { currency_code: "MXN", value: "50" },
+          description: "Premium Oxygen",
+        },
+      ],
+    });
+  };
+
+  const onApprove = async (data, actions) => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const result = await api.capturePayPalOrder({
+      orderId: data.orderID,
+      idUser: userData.idUser,
+    });
+    toast.success(result.message);
+    setShowPayPal(false);
+    fetchUserData();
+  };
+
+  const onError = () => {
+    toast.error("Error al procesar el pago");
   };
 
   return (
@@ -104,12 +139,37 @@ export const UserPage = () => {
       </form>
 
       <div className="flex flex-col items-center">
-        <button
-          onClick={() => handleClickPremium()}
-          className={`flex gap-2 ${userData.premium == 0 ? "bg-yellow-600" : "bg-red-600"} text-white font-[Open_Sans] px-3 py-2 mt-3 rounded-xl focus:outline-none`}
-        >
-          {userData.premium === 0 ? "Comprar" : "Cancelar"} Premium <Crown />
-        </button>
+        {userData.premium == 1 ? (
+          <button
+            onClick={() => handleCancelPremium()}
+            className="flex gap-2 bg-red-600 text-white font-[Open_Sans] px-3 py-2 mt-3 rounded-xl cursor-pointer"
+          >
+            Cancelar Premium <Crown />
+          </button>
+        ) : showPayPal ? (
+          <div className="w-80 mt-3">
+            <PayPalScriptProvider options={initialOptions}>
+              <PayPalButtons
+                createOrder={createOrder}
+                onApprove={onApprove}
+                onError={onError}
+              />
+            </PayPalScriptProvider>
+            <button
+              onClick={() => setShowPayPal(false)}
+              className="w-full bg-gray-500 text-white font-[Open_Sans] px-3 py-2 mt-2 rounded-xl cursor-pointer"
+            >
+              Cancelar
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => handleBuyPremium()}
+            className="flex gap-2 bg-yellow-600 text-white font-[Open_Sans] px-3 py-2 mt-3 rounded-xl cursor-pointer"
+          >
+            Comprar Premium <Crown />
+          </button>
+        )}
       </div>
     </>
   );

@@ -10,6 +10,7 @@ export function usePageUser() {
     username: "",
     email: "",
     premium: 0,
+    idUser: null,
   });
 
   const [userDataUpdate, setUserDataUpdate] = useState({
@@ -17,6 +18,8 @@ export function usePageUser() {
     email: "",
     password: "",
   });
+
+  const [showPayPal, setShowPayPal] = useState(false);
 
   const localUser = () => JSON.parse(localStorage.getItem("userData"));
 
@@ -36,14 +39,14 @@ export function usePageUser() {
     }
   };
 
-  const handleClickPremium = async () => {
+  const handleBuyPremium = () => {
+    setShowPayPal(true);
+  };
+
+  const handleCancelPremium = async () => {
     try {
-      const { idUser, premium } = localUser();
-      const updatedPremiumValue = premium == 1 ? 0 : 1;
-      const data = await api.updatePremium({
-        idUser,
-        premium: updatedPremiumValue,
-      });
+      const { idUser } = localUser();
+      const data = await api.updatePremium({ idUser, premium: 0 });
       fetchUserData();
       toast.success(data.message);
     } catch (err) {
@@ -64,9 +67,12 @@ export function usePageUser() {
     userData,
     setUserData,
     fetchUserData,
-    handleClickPremium,
+    handleBuyPremium,
+    handleCancelPremium,
     handleCloseSession,
     userDataUpdate,
     setUserDataUpdate,
+    showPayPal,
+    setShowPayPal,
   };
 }

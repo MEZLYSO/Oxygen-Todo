@@ -8,7 +8,6 @@ import { SearchBar } from "./components/SearchBar";
 import { useHomePage } from "./hooks/useHomePage";
 import logo from "../../assets/logo1.png";
 
-
 export const HomePage = () => {
   const navigate = useNavigate();
   const {
@@ -36,10 +35,18 @@ export const HomePage = () => {
     <>
       <Header
         left={
-          <span className="flex text-white text-xl font-[Open_Sans] text-4xl gap-1">
-             <img className="hidden md:flex w-15 bg-white rounded-xl " src={logo} alt="" />
-            <p className="hidden md:flex items-center px-3">Hola!  </p>
-            <p className="font-bold hidden md:flex items-center">{userData.username}</p>
+          <span className="flex items-center gap-2">
+            <img
+              className="w-10 h-10 bg-white rounded-full object-contain p-1"
+              src={logo}
+              alt=""
+            />
+            <div className="flex flex-col leading-none">
+              <p className="text-white/70 text-xs font-[Open_Sans]">Hola!</p>
+              <p className="text-white text-lg font-bold font-[Open_Sans] -mt-0.5">
+                {userData.username}
+              </p>
+            </div>
           </span>
         }
         center={<SearchBar handleSearchCallback={handleSearch} />}
@@ -74,10 +81,10 @@ export const HomePage = () => {
       />
       <div className="pt-8">
         <FolderList
-        listFolders={foldersFilter}
-        handleDeleteFolder={handleDeleteFolder}
-        handleOpenEdit={handleOpenEdit}
-      />
+          listFolders={foldersFilter}
+          handleDeleteFolder={handleDeleteFolder}
+          handleOpenEdit={handleOpenEdit}
+        />
       </div>
       <ButtonFloat handleClick={() => setShowModal(true)} />
     </>
