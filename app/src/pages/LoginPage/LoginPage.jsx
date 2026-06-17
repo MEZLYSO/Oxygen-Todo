@@ -51,7 +51,7 @@ export const LoginPage = () => {
               registro && (
                 <>
                   <label htmlFor="username"
-                    className="py-2 px-1 font-bold font-[Open_Sans] text-xl text-cafef"
+                    className="py-2 px-1 font-bold mt-5 font-[Open_Sans] text-xl text-cafef"
                   >
                     Nombre usuario:
                   </label>
