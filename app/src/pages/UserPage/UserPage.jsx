@@ -46,7 +46,7 @@ export const UserPage = () => {
     return actions.order.create({
       purchase_units: [
         {
-          amount: { currency_code: "MXN", value: "50" },
+          amount: { currency_code: "MXN", value: "70" },
           description: "Premium Oxygen",
         },
       ],
@@ -173,9 +173,15 @@ export const UserPage = () => {
         <div className="mt-10 mb-5">
           <button
             onClick={async () => {
-              if (confirm("¿Seguro que quieres eliminar tu cuenta? Todos tus datos se borrarán.")) {
+              if (
+                confirm(
+                  "¿Seguro que quieres eliminar tu cuenta? Todos tus datos se borrarán.",
+                )
+              ) {
                 try {
-                  const { idUser } = JSON.parse(localStorage.getItem("userData"));
+                  const { idUser } = JSON.parse(
+                    localStorage.getItem("userData"),
+                  );
                   await api.deleteUser(idUser);
                   localStorage.removeItem("userData");
                   localStorage.removeItem("lastNote");
