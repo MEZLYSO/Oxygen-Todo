@@ -56,6 +56,7 @@ export function usePageUser() {
 
   const handleCloseSession = () => {
     localStorage.removeItem("userData");
+    localStorage.removeItem("lastNote");
     navigate("/", { replace: true });
   };
 

@@ -30,6 +30,12 @@ function NoteRoutes($method, $uri, $body, $noteCtrl)
     return true;
   }
 
+  if ($method == 'GET' && preg_match('#^/notes/user/(\d+)$#', $uri, $matches)) {
+    $id = $matches[1];
+    $noteCtrl->getAllByUserId($id);
+    return true;
+  }
+
   if ($method == 'DELETE' && preg_match('#^/note/(\d+)$#', $uri, $matches)) {
     $id = $matches[1];
     $noteCtrl->deleteNoteById($id);

@@ -30,6 +30,12 @@ class NoteController
     echo json_encode($note);
   }
 
+  public function getAllByUserId($idUser)
+  {
+    $notes = $this->model->getAllByUserId($idUser);
+    echo json_encode($notes);
+  }
+
   public function deleteNoteById($idNote)
   {
     $this->model->delete($idNote);

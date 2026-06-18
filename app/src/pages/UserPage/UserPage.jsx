@@ -1,4 +1,4 @@
-import { ChevronsLeft, Crown, LogOut, Save } from "lucide-react";
+import { ChevronsLeft, Crown, LogOut, Save, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Header } from "../../components/Header.jsx";
@@ -170,6 +170,27 @@ export const UserPage = () => {
             Comprar Premium <Crown />
           </button>
         )}
+        <div className="mt-10 mb-5">
+          <button
+            onClick={async () => {
+              if (confirm("¿Seguro que quieres eliminar tu cuenta? Todos tus datos se borrarán.")) {
+                try {
+                  const { idUser } = JSON.parse(localStorage.getItem("userData"));
+                  await api.deleteUser(idUser);
+                  localStorage.removeItem("userData");
+                  localStorage.removeItem("lastNote");
+                  navigate("/", { replace: true });
+                  toast.success("Cuenta eliminada");
+                } catch (err) {
+                  toast.error(err.message);
+                }
+              }
+            }}
+            className="flex gap-2 items-center bg-red-600 text-white font-[Open_Sans] px-4 py-2 rounded-xl cursor-pointer hover:bg-red-700"
+          >
+            <Trash2 size={18} /> Eliminar cuenta
+          </button>
+        </div>
       </div>
     </>
   );

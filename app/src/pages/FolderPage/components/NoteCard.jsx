@@ -4,6 +4,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Trash2 } from "lucide-react";
 import { RoutesContext } from "../../../context/RoutesContext";
+import { timeAgo } from "../../../utils/timeAgo";
 
 export const NoteCard = ({
   idNote,
@@ -40,7 +41,7 @@ export const NoteCard = ({
       >
         <h3 className="font-bold text-gray-800 mb-2 ">{title}</h3>
         <p className="text-gray-600 text-sm italic border-b border-gray-100 pb-2">
-          {new Date(createdAt).toLocaleDateString("es-MX")}
+          {timeAgo(createdAt)}
         </p>
         <div className="text-gray-600 text-sm break-words line-clamp-10 flex-1 max-w-none">
           <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>

@@ -29,5 +29,7 @@ export const api = {
   getUserById: (idUser) => request("GET", `/auth/${idUser}`),
   updatePremium: (body) => request("PUT", "/user/premium", body),
   updateUser: (body) => request("PUT", "/user", body),
+  getNotesByUser: (idUser) => request("GET", `/notes/user/${idUser}`),
   capturePayPalOrder: (body) => request("POST", "/paypal/capture", body),
+  deleteUser: (id) => request("DELETE", `/user/${id}`),
 };

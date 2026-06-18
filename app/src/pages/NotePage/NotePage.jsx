@@ -1,12 +1,13 @@
+import { ChevronsLeft, FileText, Pencil, Save, X } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { ChevronsLeft, Pencil, Save, X, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
+import Markdown from "react-markdown";
+import { useNavigate, useParams } from "react-router-dom";
+import remarkGfm from "remark-gfm";
 import { Header } from "../../components/Header";
 import { RoutesContext } from "../../context/RoutesContext";
 import { api } from "../../services/api";
+import { timeAgo } from "../../utils/timeAgo";
 
 export const NotePage = () => {
   const { idNote } = useParams();
@@ -25,6 +26,7 @@ export const NotePage = () => {
       setNoteData(data);
       setTitle(data.title);
       setContent(data.content);
+      localStorage.setItem("lastNote", JSON.stringify({ idNote, title: data.title }));
     } catch (err) {
       console.error("Error al cargar la nota:", err);
       setNoteData(null);
@@ -36,6 +38,7 @@ export const NotePage = () => {
   }, [idNote]);
 
   const handleGoBack = () => {
+    localStorage.setItem("lastNote", JSON.stringify({ idNote, title }));
     const folderId = folderPage || noteData?.idFolder;
     if (folderId) {
       navigate("/folder/" + folderId, { replace: true });
@@ -52,6 +55,18 @@ export const NotePage = () => {
     } catch (err) {
       toast.error(err.message);
     }
+  };
+
+  const handleExportPDF = () => {
+    const element = document.querySelector(".nota-contenido");
+    const opt = {
+      margin: 0.5,
+      filename: title + ".pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, letterRendering: true },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+    html2pdf().set(opt).from(element).save();
   };
 
   const handleCancel = () => {
@@ -120,7 +135,7 @@ export const NotePage = () => {
 
       <div className="max-w-4xl mx-auto p-6">
         <div className="mb-4 text-sm text-gray-400 font-[Open_Sans]">
-          {new Date(noteData.createdAt).toLocaleDateString("es-MX")}
+          {timeAgo(noteData.createdAt)}
         </div>
 
         {editing ? (
@@ -131,14 +146,17 @@ export const NotePage = () => {
             placeholder="Escribe tu nota en Markdown..."
           />
         ) : (
-          <div className="w-full min-h-[600px] p-8 bg-white border border-azulf font-[Open_Sans] rounded-lg shadow-sm prose prose-sm max-w-none">
+          <div className="nota-contenido w-full min-h-[600px] p-8 bg-white border border-azulf font-[Open_Sans] rounded-lg shadow-sm prose prose-sm max-w-none">
             <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
           </div>
         )}
         {premium == 1 && (
-          <div className="pt-5 flex w-full h-auto justify-center">
-            <button className="text-center bg-azulf text-white px-2 py-1 rounded-xl font-[Open_Sans] hover:bg-cafef">
-              Resumir con IA
+          <div className="pt-5 flex justify-center">
+            <button
+              onClick={handleExportPDF}
+              className="flex gap-2 items-center bg-green-700 text-white px-5 py-2 rounded-xl font-[Open_Sans] hover:bg-green-800 cursor-pointer"
+            >
+              <FileText size={18} /> Exportar PDF
             </button>
           </div>
         )}

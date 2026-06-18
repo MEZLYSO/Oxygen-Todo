@@ -47,6 +47,13 @@ class NoteModel
     return $stmt->execute([$title, $content, $idNote]);
   }
 
+  public function getAllByUserId($idUser)
+  {
+    $stmt = $this->db->prepare("SELECT n.* FROM note n JOIN folder f ON n.idFolder = f.idFolder WHERE f.idUser=?");
+    $stmt->execute([$idUser]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
   public function delete($id)
   {
     $stmt = $this->db->prepare("DELETE FROM note WHERE idNote = ?");

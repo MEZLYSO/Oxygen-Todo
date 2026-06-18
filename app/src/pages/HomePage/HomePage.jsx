@@ -1,4 +1,5 @@
-import { User } from "lucide-react";
+import { useEffect, useState } from "react";
+import { User, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ButtonFloat } from "../../components/ButtonFloat";
 import { Header } from "../../components/Header";
@@ -6,6 +7,8 @@ import { Modal } from "../../components/Modal";
 import { FolderList } from "./components/FolderList";
 import { SearchBar } from "./components/SearchBar";
 import { useHomePage } from "./hooks/useHomePage";
+import { api } from "../../services/api";
+import { timeAgo } from "../../utils/timeAgo";
 import logo from "../../assets/logo1.png";
 
 export const HomePage = () => {
@@ -28,6 +31,18 @@ export const HomePage = () => {
   } = useHomePage();
 
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const [dailyNote, setDailyNote] = useState(null);
+  const lastNote = JSON.parse(localStorage.getItem("lastNote"));
+
+  useEffect(() => {
+    if (userData.premium == 1) {
+      api.getNotesByUser(userData.idUser).then((notes) => {
+        const random = notes[Math.floor(Math.random() * notes.length)];
+        setDailyNote(random);
+      });
+    }
+  }, []);
+
   const handleChangeUserPage = () => {
     navigate("/user", { replace: true });
   };
@@ -79,7 +94,37 @@ export const HomePage = () => {
         onChange={handleEditChange}
         onClick={handleUpdateFolder}
       />
-      <div className="pt-8">
+      <div className="pt-8 px-4">
+        {dailyNote && (
+          <div
+            onClick={() =>
+              navigate("/note/" + dailyNote.idNote, { replace: true })
+            }
+            className="bg-azulf text-white px-4 py-2 rounded-lg mb-5 cursor-pointer hover:opacity-85"
+          >
+            <div className="flex items-center justify-between">
+              <p className="font-bold font-[Open_Sans] truncate">
+                {dailyNote.title}
+              </p>
+              <p className="font-[Open_Sans] text-xs text-white/60  ml-2">
+                {timeAgo(dailyNote.createdAt)}
+              </p>
+            </div>
+            <p className="font-[Open_Sans] text-sm text-white/80 line-clamp-2">
+              {dailyNote.content}
+            </p>
+          </div>
+        )}
+        {lastNote && userData.premium == 1 && (
+          <div
+            onClick={() => navigate("/note/" + lastNote.idNote, { replace: true })}
+            className="bg-cafef text-white px-4 py-2 rounded-lg mb-5 cursor-pointer hover:opacity-85"
+          >
+            <p className="font-bold font-[Open_Sans] text-sm truncate">
+              Continuar: {lastNote.title}
+            </p>
+          </div>
+        )}
         <FolderList
           listFolders={foldersFilter}
           handleDeleteFolder={handleDeleteFolder}
