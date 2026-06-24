@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { RoutesContext } from "./context/RoutesContext";
 import PrivateGuard from "./guards/PrivateGuard";
 import PublicGuard from "./guards/PublicGuard";
@@ -27,6 +28,7 @@ function App() {
           </Route>
         </Routes>
         <Toaster position="top-right" />
+        <Analytics />
       </RoutesContext.Provider>
     </BrowserRouter>
   );
